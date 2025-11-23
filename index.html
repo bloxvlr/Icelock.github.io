@@ -26,7 +26,6 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Inter', 'Segoe UI', sans-serif;
-            cursor: none;
         }
 
         html {
@@ -39,29 +38,6 @@
             line-height: 1.6;
             overflow-x: hidden;
             background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
-        }
-
-        /* Custom Cursor */
-        .cursor {
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--accent);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
-            transition: transform 0.2s ease;
-        }
-
-        .cursor-follower {
-            width: 8px;
-            height: 8px;
-            background: var(--accent);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9998;
-            transition: transform 0.4s ease;
         }
 
         /* Typographie */
@@ -208,12 +184,12 @@
 
         /* Stats Section */
         .stats {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             position: relative;
             overflow: hidden;
-            padding-top: 80px;
+            padding-top: 100px;
         }
 
         .stats::before {
@@ -232,6 +208,7 @@
             max-width: 800px;
             position: relative;
             z-index: 1;
+            width: 100%;
         }
 
         .stats h1 {
@@ -876,6 +853,17 @@
                 right: auto;
             }
 
+            .stats {
+                padding-top: 120px;
+                min-height: 100vh;
+                display: flex;
+                align-items: flex-start;
+            }
+
+            .stats-content {
+                margin-top: 0;
+            }
+
             .stats h1 {
                 font-size: 3rem;
             }
@@ -897,11 +885,28 @@
             .stat-item.mega h3 {
                 font-size: 2.5rem;
             }
+
+            .timeline-content {
+                padding: 1.5rem;
+            }
+
+            .timeline-item:nth-child(odd) .timeline-content::after,
+            .timeline-item:nth-child(even) .timeline-content::after {
+                width: 14px;
+                height: 14px;
+                left: 18px;
+                top: 25px;
+            }
         }
 
         @media (max-width: 576px) {
             section {
                 padding: 6rem 1rem;
+            }
+
+            .stats {
+                padding-top: 100px;
+                min-height: 100vh;
             }
 
             .stats h1 {
@@ -919,14 +924,42 @@
             .wisdom-grid {
                 grid-template-columns: 1fr;
             }
+
+            .banner-item {
+                padding: 0.8rem 1.5rem;
+                margin: 0 1rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .stats {
+                padding-top: 90px;
+            }
+            
+            .stats h1 {
+                font-size: 2.2rem;
+            }
+            
+            .stats h2 {
+                font-size: 1.8rem;
+            }
+            
+            .stat-item {
+                padding: 1.5rem;
+            }
+            
+            .stat-item h3 {
+                font-size: 2rem;
+            }
+            
+            .stat-item.mega h3 {
+                font-size: 2.2rem;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Custom Cursor -->
-    <div class="cursor"></div>
-    <div class="cursor-follower"></div>
-
     <!-- Navigation -->
     <header>
         <nav>
@@ -1163,6 +1196,9 @@
                 <div class="collaboration-item" onclick="window.open('https://instagram.com/just_lucow', '_blank')">
                     <h3>@just_lucow</h3>
                 </div>
+                <div class="collaboration-item" onclick="window.open('https://instagram.com/ninhosdt', '_blank')">
+                    <h3>@ninhosdt</h3>
+                </div>
             </div>
         </div>
     </section>
@@ -1170,8 +1206,8 @@
     <!-- Gallery Section -->
     <section id="gallery" class="gallery">
         <div class="container">
-            <h2>Preuve Social</h2>
-            <p>Une démonstration de ce que j'ai acquis :</p>
+            <h2>Portfolio</h2>
+            <p>Une démonstration de mon travail :</p>
             <div class="gallery-main">
                 <img src="https://i.postimg.cc/28BtjdwW/Asceension.png" alt="Social Proof - Ascension">
             </div>
@@ -1317,32 +1353,6 @@
     </footer>
 
     <script>
-        // Custom Cursor
-        const cursor = document.querySelector('.cursor');
-        const cursorFollower = document.querySelector('.cursor-follower');
-
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-            
-            setTimeout(() => {
-                cursorFollower.style.left = e.clientX + 'px';
-                cursorFollower.style.top = e.clientY + 'px';
-            }, 100);
-        });
-
-        document.querySelectorAll('a, button, .gallery-item, .collaboration-item, .stat-item, .banner-item, .wisdom-item, .book-item').forEach(element => {
-            element.addEventListener('mouseenter', () => {
-                cursor.style.transform = 'scale(1.5)';
-                cursorFollower.style.transform = 'scale(2)';
-            });
-            
-            element.addEventListener('mouseleave', () => {
-                cursor.style.transform = 'scale(1)';
-                cursorFollower.style.transform = 'scale(1)';
-            });
-        });
-
         // Mobile menu toggle
         const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
         const navLinks = document.querySelector('.nav-links');
