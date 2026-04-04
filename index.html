@@ -1,4 +1,8 @@
-C'est ma faute, j'avais réduit la liste pour la clarté du code mais voici la version complète avec **toutes tes images rétablies** (les 14 captures d'écran), le copywriting agressif et la vidéo de fond.
+C'est une excellente idée. L'effet de flou et d'apparition progressive (fade-in avec blur) va donner un côté très cinématographique et haut de gamme qui colle parfaitement à ta vidéo de fond.
+
+J'ai retiré la section de l'offre à 179€ et j'ai intégré l'effet d'animation sur ton nouveau texte. Pour que l'animation fonctionne, j'ai ajouté un petit script qui sépare chaque mot automatiquement pour leur appliquer un délai (sinon tu devrais mettre des balises `<span>` à la main partout).
+
+Voici le code complet :
 
 ```html
 <!DOCTYPE html>
@@ -8,6 +12,7 @@ C'est ma faute, j'avais réduit la liste pour la clarté du code mais voici la v
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PERFORM | Explosion Organique & Acquisition</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet">
     <style>
         body { background-color: #000; color: #fff; font-family: 'Inter', sans-serif; letter-spacing: -0.03em; }
         .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.05); }
@@ -19,7 +24,7 @@ C'est ma faute, j'avais réduit la liste pour la clarté du code mais voici la v
         .hero-video-container {
             position: relative;
             width: 100%;
-            min-height: 90vh;
+            min-height: 95vh;
             display: flex;
             align-items: center;
             overflow: hidden;
@@ -31,8 +36,6 @@ C'est ma faute, j'avais réduit la liste pour la clarté du code mais voici la v
             left: 50%;
             min-width: 100%;
             min-height: 100%;
-            width: auto;
-            height: auto;
             z-index: -2;
             transform: translate(-50%, -50%);
             object-fit: cover;
@@ -40,26 +43,40 @@ C'est ma faute, j'avais réduit la liste pour la clarté du code mais voici la v
 
         .video-overlay {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.9) 100%);
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.9) 100%);
             z-index: -1;
         }
 
-        .proof-container img { 
-            width: 100%; 
-            height: auto; 
-            border-radius: 12px; 
-            border: 1px solid rgba(255,255,255,0.1); 
-            margin-bottom: 20px; 
-            display: block; 
+        /* --- ANIMATION CRIMSON TEXT --- */
+        .animated-text {
+            font-family: "Crimson Text", serif;
+            display: flex;
+            flex-wrap: wrap;
+            color: #eee;
         }
 
-        details summary::-webkit-details-marker { display:none; }
-        summary { list-style: none; }
-        .offer-card { border: 1px solid #3b82f6; background: linear-gradient(145deg, rgba(59, 130, 246, 0.1), transparent); }
+        .animated-text span {
+            display: inline-block;
+            white-space: pre;
+            opacity: 0;
+            transform: translate(-2px, 4px) scale(.9);
+            filter: blur(6px);
+            animation: fadeIn .8s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translate(0,0) scale(1);
+                filter: blur(0);
+            }
+        }
+
+        .proof-container img { 
+            width: 100%; height: auto; border-radius: 12px; 
+            border: 1px solid rgba(255,255,255,0.1); margin-bottom: 20px; display: block; 
+        }
 
         @media (min-width: 768px) {
             .sticky-desktop { position: sticky; top: 100px; }
@@ -80,21 +97,19 @@ C'est ma faute, j'avais réduit la liste pour la clarté du code mais voici la v
         <div class="video-overlay"></div>
 
         <div class="max-w-5xl mx-auto px-6 relative z-10">
-            <h1 class="text-4xl md:text-7xl font-black mb-6 leading-[0.95] tracking-tighter uppercase">
-                PARTIR MAINTENANT SERAIT <br>
-                <span class="text-blue">VOTRE PIRE DÉCISION DE 2026.</span>
+            <h1 class="animated-text text-4xl md:text-7xl font-bold mb-6 leading-[0.95] tracking-tighter uppercase" id="hook-title">
+                PARTIR MAINTENANT SERAIT VOTRE PIRE DÉCISION DE 2026.
             </h1>
             
             <div class="max-w-2xl border-l-2 border-blue pl-6 my-8">
-                <p class="text-lg md:text-xl text-gray-300 font-light leading-relaxed">
+                <p class="animated-text text-lg md:text-xl text-gray-300 font-light leading-relaxed" id="sub-title">
                     Le marché vous a poussé jusqu'à nous. Ignorer ce signe, c'est laisser le hasard diriger votre empire au profit de vos concurrents.
                 </p>
             </div>
 
             <div class="mt-12">
-                <p class="text-2xl md:text-4xl font-black italic tracking-tighter uppercase leading-tight">
-                    "Votre seule mission : <span class="text-blue">EXISTER.</span> <br> 
-                    La nôtre : vous rendre viral."
+                <p class="animated-text text-2xl md:text-4xl font-bold italic tracking-tighter uppercase leading-tight" id="slogan">
+                    "Votre seule mission : EXISTER. La nôtre : vous rendre viral."
                 </p>
             </div>
         </div>
@@ -159,19 +174,6 @@ C'est ma faute, j'avais réduit la liste pour la clarté du code mais voici la v
             </div>
         </section>
 
-        <section class="mb-24 md:mb-32">
-            <div class="offer-card p-8 md:p-12 rounded-[30px] md:rounded-[40px] text-center shadow-[0_0_50px_rgba(59,130,246,0.1)]">
-                <h2 class="text-2xl md:text-3xl font-black uppercase italic mb-4">L'OFFRE D'ENTRÉE PERFORM.</h2>
-                <p class="text-sm md:text-gray-400 mb-8 max-w-2xl mx-auto italic">
-                    Pour chaque partenaire rejoignant notre accompagnement, nous concevons votre site web haute conversion pour seulement <span class="text-blue font-bold">179€</span>.
-                </p>
-                <div class="flex justify-center items-center gap-4 text-xs md:text-sm font-bold uppercase tracking-widest">
-                    <span class="line-through text-gray-600">2 000 €</span>
-                    <span class="text-blue text-xl md:text-2xl">179 €</span>
-                </div>
-            </div>
-        </section>
-
         <section class="text-center py-10 md:py-20">
             <h2 class="text-3xl md:text-4xl font-black mb-8 md:mb-10 tracking-tighter uppercase italic text-blue">DÉMARRER VOTRE ACCOMPAGNEMENT.</h2>
             <a href="https://instagram.com/blox.vlr" target="_blank" class="inline-block bg-blue text-white px-10 md:px-16 py-5 md:py-6 rounded-full font-black uppercase tracking-tighter text-base md:text-xl hover:scale-105 transition-all shadow-[0_0_60px_rgba(59,130,246,0.4)]">
@@ -185,6 +187,24 @@ C'est ma faute, j'avais réduit la liste pour la clarté du code mais voici la v
         Perform © 2026 — L'Antidote à la stagnation organique.
     </footer>
 
+    <script>
+        // Script pour animer le texte mot par mot
+        function animateText(id) {
+            const el = document.getElementById(id);
+            const text = el.innerText;
+            el.innerHTML = "";
+            text.split(" ").forEach((word, i) => {
+                const span = document.createElement("span");
+                span.innerText = word + " ";
+                span.style.animationDelay = (i * 0.1) + "s";
+                el.appendChild(span);
+            });
+        }
+
+        animateText("hook-title");
+        animateText("sub-title");
+        animateText("slogan");
+    </script>
 </body>
 </html>
 ```
