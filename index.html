@@ -13,14 +13,9 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap');
 
-        body {
-            background-color: #000;
-            color: #fff;
-            font-family: 'Inter', sans-serif;
-            overflow-x: hidden;
-        }
+        body { background-color: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
 
-        /* --- EFFET GRAIN --- */
+        /* --- GRAIN --- */
         body::after {
             content: ''; position: fixed; inset: 0;
             background-image: url("https://assets.codepen.io/165585/noise_1.png");
@@ -42,39 +37,53 @@
             z-index: -1;
         }
 
+        /* --- STATS STYLISÉES --- */
+        .stat-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%);
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .stat-card::before {
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, #3b82f6, transparent);
+            transform: translateX(-100%); transition: 0.5s;
+        }
+        .stat-card:hover { border-color: #3b82f6; transform: translateY(-5px); }
+        .stat-card:hover::before { transform: translateX(100%); }
+
         /* --- BOUTON MODERNE --- */
         .btn-modern {
-            background: #ffffff;
-            color: #000;
-            padding: 18px 35px;
-            border-radius: 12px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 0 rgba(59, 130, 246, 0);
+            background: #fff; color: #000; padding: 18px 35px; border-radius: 12px;
+            font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;
+            transition: all 0.3s;
         }
+        .btn-modern:hover { background: #3b82f6; color: #fff; box-shadow: 0 10px 40px rgba(59, 130, 246, 0.4); }
 
-        .btn-modern:hover {
-            transform: translateY(-3px);
-            background: #3b82f6;
-            color: #fff;
-            box-shadow: 0 10px 40px rgba(59, 130, 246, 0.4);
-        }
-
-        /* --- GRADIENT CHIFFRES --- */
+        /* --- CHIFFRES CONCEPT --- */
         .big-num {
-            font-size: 5rem;
-            font-weight: 900;
-            line-height: 1;
+            font-size: 5rem; font-weight: 900; line-height: 1;
             background: linear-gradient(180deg, #3b82f6 0%, rgba(59, 130, 246, 0) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 1rem;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
 
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .proof-container img { width: 100%; border-radius: 12px; margin-bottom: 24px; border: 1px solid #111; }
+        /* --- FIX MOBILE OVERLAP --- */
+        @media (min-width: 1024px) {
+            .sticky-section { position: sticky; top: 10vh; }
+        }
+
+        @media (max-width: 1023px) {
+            .proof-container {
+                display: flex; overflow-x: auto; gap: 15px;
+                padding-bottom: 20px; scroll-snap-type: x mandatory;
+            }
+            .proof-container img {
+                min-width: 80vw; scroll-snap-align: center; margin-bottom: 0 !important;
+            }
+        }
+        
+        .proof-container img { border-radius: 12px; border: 1px solid #111; }
     </style>
 </head>
 <body class="antialiased">
@@ -85,16 +94,37 @@
         </video>
         <div class="video-overlay"></div>
         <div class="max-w-5xl mx-auto px-6 text-center relative z-10">
-            <h1 class="text-5xl md:text-8xl font-black uppercase leading-[0.9] mb-8 italic">
+            <h1 class="text-4xl md:text-8xl font-black uppercase leading-[0.9] mb-8 italic">
                 PARTIR MAINTENANT SERAIT <br> <span class="text-blue-500">VOTRE PIRE DÉCISION DE 2026.</span>
             </h1>
-            <p class="font-serif italic text-gray-300 text-xl md:text-2xl max-w-3xl mx-auto leading-relaxed">
+            <p class="font-serif italic text-gray-300 text-lg md:text-2xl max-w-3xl mx-auto">
                 Le marché vous a poussé jusqu'ici. Ne laissez pas votre place à vos concurrents.
             </p>
         </div>
     </header>
 
-    <section class="py-32 px-6 bg-black">
+    <section class="py-20 px-6 max-w-6xl mx-auto">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+            <div class="stat-card p-6 md:p-10 rounded-3xl text-center">
+                <div class="text-4xl md:text-6xl font-black text-blue-500 mb-1">204M+</div>
+                <div class="text-[10px] md:text-xs uppercase tracking-[0.3em] text-gray-500">Vues Cumulées</div>
+            </div>
+            <div class="stat-card p-6 md:p-10 rounded-3xl text-center">
+                <div class="text-4xl md:text-6xl font-black text-blue-500 mb-1">170K</div>
+                <div class="text-[10px] md:text-xs uppercase tracking-[0.3em] text-gray-500">Abonnés Réels</div>
+            </div>
+            <div class="stat-card p-6 md:p-10 rounded-3xl text-center">
+                <div class="text-4xl md:text-6xl font-black text-blue-500 mb-1">300K</div>
+                <div class="text-[10px] md:text-xs uppercase tracking-[0.3em] text-gray-500">Impact Shopify</div>
+            </div>
+            <div class="stat-card p-6 md:p-10 rounded-3xl text-center">
+                <div class="text-4xl md:text-6xl font-black text-blue-500 mb-1">FULL</div>
+                <div class="text-[10px] md:text-xs uppercase tracking-[0.3em] text-gray-500">Accompagnement</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 px-6 bg-black">
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-20">
                 <h2 class="text-blue-500 font-bold uppercase tracking-[0.4em] text-xs mb-6">Le Concept Perform</h2>
@@ -102,77 +132,72 @@
                     NOUS PILOTONS VOS RÉSEAUX. <br> NOUS GÉNÉRONS <span class="text-blue-500">VOTRE VIRALITÉ.</span>
                 </p>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
-                <div class="relative">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <div>
                     <div class="big-num">01</div>
                     <h3 class="font-black uppercase text-2xl mb-4 italic">Le Briefing</h3>
-                    <p class="text-gray-400 font-serif italic text-lg leading-relaxed">Vous nous présentez votre projet et vos ambitions. On s'imprègne de votre univers pour définir la meilleure direction stratégique.</p>
+                    <p class="text-gray-400 font-serif italic text-lg leading-relaxed">Vous nous présentez votre projet. On s'imprègne de votre univers pour définir la meilleure direction stratégique.</p>
                 </div>
-                <div class="relative">
+                <div>
                     <div class="big-num">02</div>
                     <h3 class="font-black uppercase text-2xl mb-4 italic">L'Ingénierie</h3>
-                    <p class="text-gray-400 font-serif italic text-lg leading-relaxed">Nos équipes analysent les tendances et créent un système sur-mesure. On prend en charge l'intégralité de la production pour maximiser l'impact.</p>
+                    <p class="text-gray-400 font-serif italic text-lg leading-relaxed">Nos équipes analysent les tendances et prennent en charge l'intégralité de la production pour maximiser l'impact.</p>
                 </div>
-                <div class="relative">
+                <div>
                     <div class="big-num">03</div>
                     <h3 class="font-black uppercase text-2xl mb-4 italic">L'Explosion</h3>
-                    <p class="text-gray-400 font-serif italic text-lg leading-relaxed">Votre marque sature les réseaux sociaux. Vous obtenez l'attention massive nécessaire pour transformer vos vues en opportunités réelles.</p>
+                    <p class="text-gray-400 font-serif italic text-lg leading-relaxed">Votre marque sature les réseaux. Vous obtenez l'attention massive nécessaire pour transformer vos vues en opportunités.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="py-32 px-6 bg-[#050505] border-y border-white/5">
-        <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-16">
+    <section class="py-24 px-6 bg-[#050505] border-y border-white/5">
+        <div class="max-w-5xl mx-auto flex flex-col lg:flex-row items-center gap-16">
             <div class="flex-1">
                 <h2 class="text-4xl md:text-6xl font-black uppercase italic leading-[0.9] mb-8">
                     300K VUES EN <br> <span class="text-blue-500">QUELQUES SEMAINES.</span>
                 </h2>
-                <p class="text-gray-400 font-serif italic text-lg md:text-xl leading-relaxed mb-8">
+                <p class="text-gray-400 font-serif italic text-lg md:text-xl leading-relaxed">
                     Cas Shopify : Nous avons généré plus de <span class="text-white">300 000 vues qualifiées</span> TikTok en moins d'un mois pour une boutique e-commerce. 
                 </p>
             </div>
-            <div class="flex-1">
-                <div class="glass p-4 rounded-3xl border-blue-500/20">
-                    <img src="https://i.postimg.cc/L5fB5JmF/Capture-d-ecran-2025-03-06-221831.png" class="rounded-2xl" alt="Shopify Proof">
+            <div class="flex-1 w-full">
+                <div class="bg-blue-500/10 p-4 rounded-3xl border border-blue-500/20">
+                    <img src="https://i.postimg.cc/L5fB5JmF/Capture-d-ecran-2025-03-06-221831.png" class="rounded-2xl w-full" alt="Shopify Proof">
                 </div>
             </div>
         </div>
     </section>
 
-    <main class="max-w-6xl mx-auto px-6 pt-32 pb-32">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-32">
-            <div class="glass p-8 rounded-xl text-center"><div class="text-4xl font-black text-blue-500">204M+</div><p class="text-xs uppercase text-gray-500">Vues</p></div>
-            <div class="glass p-8 rounded-xl text-center"><div class="text-4xl font-black text-blue-500">170K</div><p class="text-xs uppercase text-gray-500">Abonnés</p></div>
-            <div class="glass p-8 rounded-xl text-center"><div class="text-4xl font-black text-blue-500">300K</div><p class="text-xs uppercase text-gray-500">Shopify</p></div>
-            <div class="glass p-8 rounded-xl text-center"><div class="text-4xl font-black text-blue-500">FULL</div><p class="text-xs uppercase text-gray-500">Gestion</p></div>
-        </div>
-
-        <div class="grid md:grid-cols-2 gap-20 items-start">
-            <div class="sticky top-32 flex flex-col items-center md:items-start text-center md:text-left">
-                <h3 class="text-4xl font-black uppercase italic mb-8 text-blue-500 leading-none">Légitimité terrain.</h3>
-                <p class="text-gray-400 font-serif italic text-xl mb-12">Perform a généré plus de 204 millions de vues. Votre seule mission : exister. La nôtre : vous propulser.</p>
+    <main class="max-w-6xl mx-auto px-6 py-24">
+        <div class="grid lg:grid-cols-2 gap-16 items-start">
+            <div class="sticky-section text-center lg:text-left">
+                <h3 class="text-4xl font-black uppercase italic mb-8 text-blue-500">Légitimité terrain.</h3>
+                <p class="text-gray-400 font-serif italic text-xl mb-12">
+                    Perform a généré plus de 204 millions de vues. Votre seule mission : exister. La nôtre : vous propulser.
+                </p>
                 
                 <button class="btn-modern" onclick="window.open('https://instagram.com/blox.vlr', '_blank')">
                     Envoyer un DM
                 </button>
-                <p class="mt-6 text-gray-600 text-[10px] uppercase tracking-[0.3em] max-w-[250px]">Présentez-moi votre projet en quelques mots sur Instagram.</p>
+                <p class="mt-6 text-gray-600 text-[10px] uppercase tracking-[0.3em]">Présentez-moi votre projet en quelques mots sur Instagram.</p>
             </div>
 
             <div class="proof-container">
-                <img src="https://i.postimg.cc/j2NQ2DRV/Capture-d-ecran-2025-03-06-221719.png">
-                <img src="https://i.postimg.cc/tJPtJs9X/Capture-d-ecran-2025-03-06-221946.png">
-                <img src="https://i.postimg.cc/nVQ10PBq/image.png">
-                <img src="https://i.postimg.cc/mkMNkPT4/image-2.png">
-                <img src="https://i.postimg.cc/d3dm3hJK/image-3.png">
-                <img src="https://i.postimg.cc/6qRLq8BW/image-4.png">
-                <img src="https://i.postimg.cc/j2NQ2DRq/image-5.png">
-                <img src="https://i.postimg.cc/MHRbHnzp/image-6.png">
-                <img src="https://i.postimg.cc/jqJhZFPN/image-7.png">
-                <img src="https://i.postimg.cc/h470p5Td/image-8.png">
-                <img src="https://i.postimg.cc/kMtyfpKS/image-9.png">
-                <img src="https://i.postimg.cc/jqJhZFPh/IMG-0534-PNG.png">
-                <img src="https://i.postimg.cc/05JCcBD0/IMG-1872.jpg">
+                <img src="https://i.postimg.cc/j2NQ2DRV/Capture-d-ecran-2025-03-06-221719.png" class="mb-6">
+                <img src="https://i.postimg.cc/tJPtJs9X/Capture-d-ecran-2025-03-06-221946.png" class="mb-6">
+                <img src="https://i.postimg.cc/nVQ10PBq/image.png" class="mb-6">
+                <img src="https://i.postimg.cc/mkMNkPT4/image-2.png" class="mb-6">
+                <img src="https://i.postimg.cc/d3dm3hJK/image-3.png" class="mb-6">
+                <img src="https://i.postimg.cc/6qRLq8BW/image-4.png" class="mb-6">
+                <img src="https://i.postimg.cc/j2NQ2DRq/image-5.png" class="mb-6">
+                <img src="https://i.postimg.cc/MHRbHnzp/image-6.png" class="mb-6">
+                <img src="https://i.postimg.cc/jqJhZFPN/image-7.png" class="mb-6">
+                <img src="https://i.postimg.cc/h470p5Td/image-8.png" class="mb-6">
+                <img src="https://i.postimg.cc/kMtyfpKS/image-9.png" class="mb-6">
+                <img src="https://i.postimg.cc/jqJhZFPh/IMG-0534-PNG.png" class="mb-6">
+                <img src="https://i.postimg.cc/05JCcBD0/IMG-1872.jpg" class="mb-6">
             </div>
         </div>
     </main>
@@ -186,16 +211,19 @@
         gsap.ticker.add((time)=>{ lenis.raf(time * 1000); });
         gsap.registerPlugin(ScrollTrigger);
 
+        // Animations Big Numbers
         gsap.from(".big-num", {
             scrollTrigger: { trigger: ".big-num", start: "top 90%" },
             y: 30, opacity: 0, stagger: 0.2, duration: 1, ease: "power2.out"
         });
 
-        gsap.from(".proof-container img", {
-            scrollTrigger: { trigger: ".proof-container", start: "top 80%" },
-            y: 50, opacity: 0, stagger: 0.1, duration: 1
-        });
+        // Grille Proofs (Desktop uniquement)
+        if (window.innerWidth >= 1024) {
+            gsap.from(".proof-container img", {
+                scrollTrigger: { trigger: ".proof-container", start: "top 80%" },
+                y: 50, opacity: 0, stagger: 0.1, duration: 1
+            });
+        }
     </script>
 </body>
 </html>
-```
