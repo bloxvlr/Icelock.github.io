@@ -16,7 +16,7 @@
         .hero-video-container {
             position: relative;
             width: 100%;
-            height: 80vh; /* Ajuste la hauteur ici (80% de l'écran) */
+            min-height: 90vh;
             display: flex;
             align-items: center;
             overflow: hidden;
@@ -35,17 +35,15 @@
             object-fit: cover;
         }
 
-        /* L'overlay sombre pour la lisibilité */
         .video-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.9) 100%);
+            background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.9) 100%);
             z-index: -1;
         }
-        /* ---------------------------------- */
 
         .proof-container img { 
             width: 100%; 
@@ -79,14 +77,23 @@
         <div class="video-overlay"></div>
 
         <div class="max-w-5xl mx-auto px-6 relative z-10">
-            <h1 class="text-4xl md:text-7xl font-black mb-6 md:mb-8 leading-[1.1] md:leading-[0.95] tracking-tighter uppercase">
-                204 MILLIONS DE VUES. <br> 
-                UN SYSTÈME QUE <br> 
-                <span class="text-blue">VOS CONCURRENTS IGNORENT.</span>
+            <h1 class="text-4xl md:text-7xl font-black mb-6 leading-[0.95] tracking-tighter uppercase">
+                PARTIR MAINTENANT SERAIT <br>
+                <span class="text-blue">VOTRE PIRE DÉCISION DE 2026.</span>
             </h1>
-            <p class="text-base md:text-xl text-gray-300 max-w-3xl leading-relaxed font-light italic">
-                Nous ne "cherchons" pas la viralité. Nous déployons les méthodes concrètes pour transformer votre attention organique en levier de croissance prévisible sur tous les réseaux.
-            </p>
+            
+            <div class="max-w-2xl border-l-2 border-blue pl-6 my-8">
+                <p class="text-lg md:text-xl text-gray-300 font-light leading-relaxed">
+                    Le marché vous a poussé jusqu'à nous. Ignorer ce signe, c'est laisser le hasard diriger votre empire au profit de vos concurrents.
+                </p>
+            </div>
+
+            <div class="mt-12">
+                <p class="text-2xl md:text-4xl font-black italic tracking-tighter uppercase leading-tight">
+                    "Votre seule mission : <span class="text-blue">EXISTER.</span> <br> 
+                    La nôtre : vous rendre viral."
+                </p>
+            </div>
         </div>
     </header>
 
@@ -121,8 +128,8 @@
 
             <div class="proof-container">
                 <span class="text-[10px] uppercase tracking-[0.5em] text-blue font-bold mb-6 block text-center">Validation Analytics</span>
-                <img src="https://i.postimg.cc/j2NQ2DRV/Capture-d-ecran-2025-03-06-221719.png">
-                <img src="https://i.postimg.cc/L5fB5JmF/Capture-d-ecran-2025-03-06-221831.png">
+                <img src="https://i.postimg.cc/j2NQ2DRV/Capture-d-ecran-2025-03-06-221719.png" alt="Analytics 1">
+                <img src="https://i.postimg.cc/L5fB5JmF/Capture-d-ecran-2025-03-06-221831.png" alt="Analytics 2">
             </div>
         </section>
 
