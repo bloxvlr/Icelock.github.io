@@ -3,198 +3,228 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PERFORM | Explosion Organique & Acquisition</title>
+    <title>PERFORM | 2026</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
     <style>
-        body { background-color: #000; color: #fff; font-family: 'Inter', sans-serif; letter-spacing: -0.03em; overflow-x: hidden; }
-        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.05); }
-        .text-blue { color: #3b82f6 !important; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;900&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap');
+
+        :root {
+            --color-blue: #3b82f6;
+            --font-main: "Inter", sans-serif;
+            --font-serif: "Crimson Text", serif;
+        }
+
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: var(--font-main);
+            overflow-x: hidden;
+        }
+
+        /* --- EFFET GRAIN/POUSSIERE --- */
+        body::after {
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("https://img.freepik.com/premium-photo/white-dust-scratches-black-background_279525-2.jpg?w=640");
+            opacity: 0.1; mix-blend-mode: screen; pointer-events: none; z-index: 999;
+        }
+
+        /* --- HEADER FILTROLL EFFECT --- */
+        .hero-container {
+            height: 100vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; perspective: 1000px;
+        }
+        .header-content { text-align: center; transform-style: preserve-3d; }
+
+        /* --- STICKY VIDEO ZOOM --- */
+        .scroll-container { position: relative; height: 300vh; }
+        .video-wrapper {
+            position: sticky; top: 0; left: 0; width: 100%; height: 100vh;
+            display: flex; justify-content: center; align-items: center;
+        }
+        #video-zoom-container {
+            width: 300px; height: 300px; overflow: hidden;
+            border-radius: 20px; transition: border-radius 0.3s;
+            position: relative;
+        }
+        video { width: 100%; height: 100%; object-fit: cover; }
         
-        /* --- VIDÉO DE FOND --- */
-        .hero-video-container {
-            position: relative; width: 100%; min-height: 95vh; display: flex; align-items: center; overflow: hidden;
-        }
-        .video-bg {
-            position: absolute; top: 50%; left: 50%; min-width: 100%; min-height: 100%;
-            z-index: -2; transform: translate(-50%, -50%); object-fit: cover;
-        }
-        .video-overlay {
+        .video-overlay-text {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,1) 100%);
-            z-index: -1;
+            display: flex; flex-direction: column; justify-content: center;
+            align-items: center; background: rgba(0,0,0,0.6);
+            opacity: 0; backdrop-filter: blur(10px);
         }
 
-        /* --- ANIMATION TEXTE --- */
-        .animated-text { font-family: "Crimson Text", serif; display: flex; flex-wrap: wrap; color: #eee; }
-        .animated-text span {
-            display: inline-block; white-space: pre; opacity: 0;
-            transform: translate(-2px, 4px) scale(.9); filter: blur(6px);
-            animation: fadeIn .8s ease-out forwards;
+        /* --- LA FLAMME CSS --- */
+        .flame-box { 
+            position: relative; height: 60vh; display: flex; 
+            align-items: center; justify-content: center; background: #000;
         }
-        @keyframes fadeIn { to { opacity: 1; transform: translate(0,0) scale(1); filter: blur(0); } }
-
-        /* --- SYSTÈME DE FLAMME CSS (ROBUSTE) --- */
-        .flame-container {
-            width: 200px; height: 300px; position: relative;
-            filter: blur(10px) contrast(20); /* Effet organique gluant */
+        .match {
+            animation: burn 4s infinite;
+            width: 30vmin; aspect-ratio: 1;
+            background: radial-gradient(100% 100% at 90% 90%, #251c27, #251c2733 20%, #251c2700 50%),
+                        radial-gradient(farthest-side at 110% 120%, #251c27, #631, #cb6c3b88, #0000),
+                        radial-gradient(at 100% 100%, #fc08, #cb6c3b, #eebd7600 60%),
+                        linear-gradient(135deg, #fff0 20%, #ff0);
+            background-color: #ffe; border-radius: 2% 87% 45% 85%;
+            box-shadow: inset 2vmin 2vmin 2vmin -1.5vmin #f808, inset -1vmin -1vmin 5vmin -3vmin #00f7,
+                        -1vmin -1vmin 2vmin #ce8c47, -6vmin -6vmin 35vmin 3vmin #fa06;
+            transform: rotate(45deg); position: relative;
         }
-        .flame-part {
-            width: 100px; height: 100px; border-radius: 50%;
-            position: absolute; bottom: 0; left: 50%;
-            transform: translateX(-50%);
-            background: #3b82f6; /* Flamme Bleue Perform */
-            animation: move 2s infinite ease-in;
-        }
-        .flame-part:nth-child(2) { width: 80px; height: 80px; animation-delay: 0.5s; background: #60a5fa; }
-        .flame-part:nth-child(3) { width: 60px; height: 60px; animation-delay: 1s; background: #fff; }
-
-        @keyframes move {
-            0% { transform: translateX(-50%) translateY(0) scale(1); }
-            100% { transform: translateX(-50%) translateY(-200px) scale(0); opacity: 0; }
+        .match::after { /* Tête d'allumette */
+            content: ""; display: block; width: 6vmin; height: 5vmin;
+            background: linear-gradient(to right, #d68356, #251c27);
+            position: absolute; top: 24vmin; left: 24vmin; border-radius: 100%;
+            transform: translate(-50%, -50%) rotate(45deg);
         }
 
-        /* --- SCROLL REVEAL --- */
-        .reveal { opacity: 0; transform: translateY(30px); transition: all 1s ease-out; }
-        .reveal.visible { opacity: 1; transform: translateY(0); }
+        @keyframes burn {
+            0%, 100% { border-radius: 5% 87% 45% 85%; width: 30vmin; }
+            50% { border-radius: 2% 87% 42% 90%; width: 32vmin; }
+        }
 
-        .proof-container img { width: 100%; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 20px; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .proof-container img { width: 100%; border-radius: 10px; margin-bottom: 20px; border: 1px solid #222; }
     </style>
 </head>
-<body class="antialiased">
+<body>
 
-    <header class="hero-video-container">
-        <video autoplay muted loop playsinline class="video-bg">
-            <source src="ma-video.mp4" type="video/mp4">
-        </video>
-        <div class="video-overlay"></div>
-
-        <div class="max-w-5xl mx-auto px-6 relative z-10">
-            <h1 class="animated-text text-4xl md:text-7xl font-bold mb-6 uppercase" id="hook-title">
-                PARTIR MAINTENANT SERAIT VOTRE <span class="text-blue">PIRE DÉCISION</span> DE 2026.
-            </h1>
-            <div class="max-w-2xl border-l-2 border-blue pl-6 my-8">
-                <p class="animated-text text-lg md:text-xl text-gray-300 font-light italic" id="sub-title">
-                    Le <span class="text-blue">marché</span> vous a poussé jusqu'à nous. Ignorer ce signe, c'est laisser le hasard diriger votre <span class="text-blue">empire</span> au profit de vos concurrents.
-                </p>
-            </div>
-            <div class="mt-12">
-                <p class="animated-text text-2xl md:text-4xl font-bold italic uppercase" id="slogan">
-                    "Votre seule mission : <span class="text-blue">EXISTER</span>. La nôtre : vous rendre viral."
-                </p>
-            </div>
-        </div>
-    </header>
-
-    <section class="reveal flex flex-col md:flex-row items-center justify-around py-24 px-10 bg-black overflow-hidden" id="trigger-reveal">
-        <div class="max-w-lg mb-10 md:mb-0 text-center md:text-left">
-            <h2 class="text-3xl md:text-5xl font-black italic uppercase leading-tight">
-                FAITES EN SORTE QUE CETTE FLAMME <br>
-                <span class="text-blue">"TON PROJET"</span> <br>
-                NE S'ÉTEIGNE JAMAIS.
-            </h2>
-        </div>
-        
-        <div class="flame-container">
-            <div class="flame-part"></div>
-            <div class="flame-part"></div>
-            <div class="flame-part"></div>
-            <div class="flame-part"></div>
+    <section class="hero-container">
+        <div class="header-content">
+            <p class="text-blue-500 font-bold tracking-[0.3em] mb-4 uppercase text-xs">Accompagnement 2026</p>
+            <h1 class="text-5xl md:text-8xl font-black uppercase leading-none mb-4 italic">PERFORM<span class="text-blue-500">.</span></h1>
+            <p class="font-serif italic text-gray-400 text-xl">L'antidote à la stagnation organique.</p>
         </div>
     </section>
 
-    <main class="max-w-5xl mx-auto px-6 pt-16 pb-24">
-        
-        <section class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-32 reveal">
-            <div class="glass p-8 rounded-2xl text-center border-blue/20">
-                <div class="text-3xl font-black text-blue">204M+</div>
-                <div class="text-[10px] uppercase tracking-widest text-gray-600 mt-2">Vues cumulées</div>
-            </div>
-            <div class="glass p-8 rounded-2xl text-center border-white/5">
-                <div class="text-3xl font-black text-blue">300K</div>
-                <div class="text-[10px] uppercase text-gray-600 mt-2">Shopify TikTok</div>
-            </div>
-            <div class="glass p-8 rounded-2xl text-center border-white/5">
-                <div class="text-3xl font-black text-blue">170K+</div>
-                <div class="text-[10px] uppercase text-gray-600 mt-2">Abonnés</div>
-            </div>
-            <div class="glass p-8 rounded-2xl text-center border-white/5">
-                <div class="text-3xl font-black text-blue">Full</div>
-                <div class="text-[10px] uppercase text-gray-600 mt-2">Gestion</div>
-            </div>
-        </section>
-
-        <section class="flex flex-col md:grid md:grid-cols-2 gap-12 mb-32 reveal">
-            <div class="space-y-6">
-                <h2 class="text-3xl font-black uppercase italic text-blue">Légitimité terrain.</h2>
-                <p class="text-gray-400 leading-relaxed font-light">
-                    La plupart des agences promettent. <strong>Perform exécute.</strong><br><br>
-                    Tout ce que Perform propose a été testé et validé sur mes propres réseaux de 170 000 abonnés.
-                </p>
-                <div class="glass p-6 rounded-2xl border border-blue/20">
-                    <ul class="space-y-3 text-xs font-bold uppercase tracking-widest text-gray-300">
-                        <li>✔ Réécriture complète de vos scripts</li>
-                        <li>✔ Montage dynamique haute rétention</li>
-                        <li>✔ Stratégie de publication optimisée</li>
-                    </ul>
+    <div class="scroll-container">
+        <div class="video-wrapper">
+            <div id="video-zoom-container">
+                <video id="main-video" autoplay muted loop playsinline>
+                    <source src="ma-video.mp4" type="video/mp4">
+                </video>
+                <div class="video-overlay-text p-8 text-center">
+                    <h2 class="text-3xl md:text-6xl font-black uppercase mb-6 leading-tight">
+                        PARTIR MAINTENANT SERAIT <br> 
+                        <span class="text-blue-500">VOTRE PIRE DÉCISION.</span>
+                    </h2>
+                    <p class="text-gray-300 max-w-xl font-serif italic text-lg">
+                        Le marché vous a poussé jusqu'ici. Ignorer ce signe, c'est laisser vos concurrents piller votre audience.
+                    </p>
                 </div>
             </div>
+        </div>
+    </div>
 
+    <section class="py-32 px-6">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-20">
+            <div class="flex-1">
+                <h2 class="text-4xl md:text-6xl font-black italic uppercase leading-none mb-8">
+                    FAITES EN SORTE QUE <br> CETTE FLAMME <br>
+                    <span class="text-blue-500">"TON PROJET"</span> <br>
+                    NE S'ÉTEIGNE JAMAIS.
+                </h2>
+            </div>
+            <div class="flex-1 flex justify-center py-20">
+                <div class="match"></div>
+            </div>
+        </div>
+    </section>
+
+    <main class="max-w-6xl mx-auto px-6 pb-32">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-32">
+            <div class="glass p-8 rounded-xl text-center">
+                <div class="text-4xl font-black text-blue-500">204M+</div>
+                <p class="text-[10px] uppercase tracking-widest text-gray-500 mt-2">Vues</p>
+            </div>
+            <div class="glass p-8 rounded-xl text-center"><div class="text-4xl font-black text-blue-500">170K</div><p class="text-[10px] uppercase text-gray-500 mt-2">Abonnés</p></div>
+            <div class="glass p-8 rounded-xl text-center"><div class="text-4xl font-black text-blue-500">300K</div><p class="text-[10px] uppercase text-gray-500 mt-2">Shopify</p></div>
+            <div class="glass p-8 rounded-xl text-center"><div class="text-4xl font-black text-blue-500">FULL</div><p class="text-[10px] uppercase text-gray-500 mt-2">Gestion</p></div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-20 items-start">
+            <div class="sticky top-32">
+                <h3 class="text-3xl font-black uppercase italic mb-6 text-blue-500">Légitimité terrain.</h3>
+                <p class="text-gray-400 font-serif italic text-lg leading-relaxed">
+                    Tout ce que Perform propose a été testé et validé sur mes propres réseaux. On ne vend pas de la théorie, on vend de l'expérience brute.
+                </p>
+                <a href="https://instagram.com/blox.vlr" class="inline-block mt-10 bg-blue-600 text-white px-12 py-5 rounded-full font-black uppercase tracking-tighter hover:scale-105 transition-transform shadow-2xl shadow-blue-900/50">
+                    Propulser mon projet
+                </a>
+            </div>
             <div class="proof-container">
-                <span class="text-[10px] uppercase tracking-[0.5em] text-blue font-bold mb-6 block text-center">Validation Analytics</span>
                 <img src="https://i.postimg.cc/j2NQ2DRV/Capture-d-ecran-2025-03-06-221719.png">
                 <img src="https://i.postimg.cc/L5fB5JmF/Capture-d-ecran-2025-03-06-221831.png">
                 <img src="https://i.postimg.cc/tJPtJs9X/Capture-d-ecran-2025-03-06-221946.png">
                 <img src="https://i.postimg.cc/nVQ10PBq/image.png">
-                <img src="https://i.postimg.cc/mkMNkPT4/image-2.png">
-                <img src="https://i.postimg.cc/d3dm3hJK/image-3.png">
-                <img src="https://i.postimg.cc/6qRLq8BW/image-4.png">
-                <img src="https://i.postimg.cc/j2NQ2DRq/image-5.png">
-                <img src="https://i.postimg.cc/MHRbHnzp/image-6.png">
-                <img src="https://i.postimg.cc/jqJhZFPN/image-7.png">
-                <img src="https://i.postimg.cc/h470p5Td/image-8.png">
-                <img src="https://i.postimg.cc/kMtyfpKS/image-9.png">
-                <img src="https://i.postimg.cc/jqJhZFPh/IMG-0534-PNG.png">
                 <img src="https://i.postimg.cc/05JCcBD0/IMG-1872.jpg">
             </div>
-        </section>
-
-        <section class="text-center py-20 reveal">
-            <h2 class="text-3xl md:text-4xl font-black mb-10 tracking-tighter uppercase italic text-blue">DÉMARRER VOTRE ACCOMPAGNEMENT.</h2>
-            <a href="https://instagram.com/blox.vlr" target="_blank" class="inline-block bg-blue text-white px-10 md:px-16 py-6 rounded-full font-black uppercase text-xl hover:scale-105 transition-all shadow-[0_0_60px_rgba(59,130,246,0.4)]">
-                ENVOYER UN DM À @BLOX.VLR
-            </a>
-        </section>
+        </div>
     </main>
 
-    <footer class="py-10 border-t border-white/5 text-center text-gray-800 text-[9px] uppercase tracking-[0.4em]">
-        Perform © 2026 — L'Antidote à la stagnation organique.
-    </footer>
-
     <script>
-        // --- ANIMATION TEXTE ---
-        function animateText(id) {
-            const el = document.getElementById(id);
-            const words = el.innerHTML.split(/(\s+|<[^>]+>)/).filter(x => x.trim().length > 0 || x.includes('<'));
-            el.innerHTML = "";
-            words.forEach((word, i) => {
-                const span = document.createElement("span");
-                if (word.startsWith('<')) { span.innerHTML = word; span.className = "text-blue"; }
-                else { span.innerText = word + " "; }
-                span.style.animationDelay = (i * 0.08) + "s";
-                el.appendChild(span);
-            });
-        }
+        // Smooth Scroll avec Lenis
+        const lenis = new Lenis();
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time)=>{ lenis.raf(time * 1000); });
+        gsap.ticker.lagSmoothing(0);
 
-        // --- SCROLL REVEAL ---
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        gsap.registerPlugin(ScrollTrigger);
 
-        animateText("hook-title");
-        animateText("sub-title");
-        animateText("slogan");
+        // 1. Animation Header (Film Roll Effect)
+        gsap.to(".header-content > *", {
+            scrollTrigger: {
+                trigger: ".hero-container",
+                start: "top top",
+                end: "bottom top",
+                scrub: true
+            },
+            rotationX: 90,
+            y: -50,
+            opacity: 0,
+            stagger: 0.1,
+            ease: "power2.in"
+        });
+
+        // 2. Animation Video Zoom (Scroll Précis)
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: ".scroll-container",
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 1
+            }
+        });
+
+        tl.to("#video-zoom-container", {
+            width: "100vw",
+            height: "100vh",
+            borderRadius: "0px",
+            duration: 1
+        })
+        .to(".video-overlay-text", {
+            opacity: 1,
+            duration: 0.5
+        }, "-=0.5");
+
+        // 3. Reveal Stats & Proofs
+        gsap.from(".glass", {
+            scrollTrigger: {
+                trigger: ".glass",
+                start: "top 90%"
+            },
+            y: 50,
+            opacity: 0,
+            stagger: 0.1,
+            duration: 1,
+            ease: "expo.out"
+        });
     </script>
 </body>
 </html>
