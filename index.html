@@ -15,7 +15,7 @@
 
         body { background-color: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
 
-        /* --- GRAIN --- */
+        /* --- EFFET GRAIN --- */
         body::after {
             content: ''; position: fixed; inset: 0;
             background-image: url("https://assets.codepen.io/165585/noise_1.png");
@@ -37,23 +37,16 @@
             z-index: -1;
         }
 
-        /* --- STATS STYLISÉES --- */
+        /* --- STATS CARDS --- */
         .stat-card {
-            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%);
-            border: 1px solid rgba(255,255,255,0.1);
-            position: relative;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0) 100%);
+            border: 1px solid rgba(255,255,255,0.08);
+            backdrop-filter: blur(5px);
+            transition: all 0.4s ease;
         }
-        .stat-card::before {
-            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
-            background: linear-gradient(90deg, transparent, #3b82f6, transparent);
-            transform: translateX(-100%); transition: 0.5s;
-        }
-        .stat-card:hover { border-color: #3b82f6; transform: translateY(-5px); }
-        .stat-card:hover::before { transform: translateX(100%); }
+        .stat-card:hover { border-color: #3b82f6; transform: translateY(-5px); background: rgba(59, 130, 246, 0.05); }
 
-        /* --- BOUTON MODERNE --- */
+        /* --- BOUTON --- */
         .btn-modern {
             background: #fff; color: #000; padding: 18px 35px; border-radius: 12px;
             font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;
@@ -68,22 +61,38 @@
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
 
-        /* --- FIX MOBILE OVERLAP --- */
+        /* --- RESPONSIVE PROOFS (FIX ECRASEMENT) --- */
+        .proof-container img { 
+            border-radius: 12px; 
+            border: 1px solid #111; 
+            height: auto; /* Respecte l'aspect ratio original */
+            width: 100%;
+            object-fit: contain;
+        }
+
         @media (min-width: 1024px) {
-            .sticky-section { position: sticky; top: 10vh; }
+            .sticky-section { position: sticky; top: 12vh; }
         }
 
         @media (max-width: 1023px) {
             .proof-container {
-                display: flex; overflow-x: auto; gap: 15px;
-                padding-bottom: 20px; scroll-snap-type: x mandatory;
+                display: flex;
+                overflow-x: auto;
+                gap: 20px;
+                padding: 20px 0;
+                scroll-snap-type: x mandatory;
+                scrollbar-width: none; /* Cache la barre de scroll */
             }
+            .proof-container::-webkit-scrollbar { display: none; }
+            
             .proof-container img {
-                min-width: 80vw; scroll-snap-align: center; margin-bottom: 0 !important;
+                min-width: 65vw; /* Plus petit pour voir la suite */
+                max-width: 65vw;
+                scroll-snap-align: start;
+                margin-bottom: 0 !important;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             }
         }
-        
-        .proof-container img { border-radius: 12px; border: 1px solid #111; }
     </style>
 </head>
 <body class="antialiased">
@@ -103,66 +112,64 @@
         </div>
     </header>
 
-    <section class="py-20 px-6 max-w-6xl mx-auto">
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-            <div class="stat-card p-6 md:p-10 rounded-3xl text-center">
-                <div class="text-4xl md:text-6xl font-black text-blue-500 mb-1">204M+</div>
-                <div class="text-[10px] md:text-xs uppercase tracking-[0.3em] text-gray-500">Vues Cumulées</div>
+    <section class="py-20 px-4 max-w-6xl mx-auto">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
+            <div class="stat-card p-5 md:p-10 rounded-2xl md:rounded-3xl text-center">
+                <div class="text-3xl md:text-6xl font-black text-blue-500 mb-1">204M+</div>
+                <div class="text-[8px] md:text-xs uppercase tracking-[0.2em] text-gray-500">Vues Cumulées</div>
             </div>
-            <div class="stat-card p-6 md:p-10 rounded-3xl text-center">
-                <div class="text-4xl md:text-6xl font-black text-blue-500 mb-1">170K</div>
-                <div class="text-[10px] md:text-xs uppercase tracking-[0.3em] text-gray-500">Abonnés Réels</div>
+            <div class="stat-card p-5 md:p-10 rounded-2xl md:rounded-3xl text-center">
+                <div class="text-3xl md:text-6xl font-black text-blue-500 mb-1">170K</div>
+                <div class="text-[8px] md:text-xs uppercase tracking-[0.2em] text-gray-500">Abonnés Réels</div>
             </div>
-            <div class="stat-card p-6 md:p-10 rounded-3xl text-center">
-                <div class="text-4xl md:text-6xl font-black text-blue-500 mb-1">300K</div>
-                <div class="text-[10px] md:text-xs uppercase tracking-[0.3em] text-gray-500">Impact Shopify</div>
+            <div class="stat-card p-5 md:p-10 rounded-2xl md:rounded-3xl text-center">
+                <div class="text-3xl md:text-6xl font-black text-blue-500 mb-1">300K</div>
+                <div class="text-[8px] md:text-xs uppercase tracking-[0.2em] text-gray-500">Impact Shopify</div>
             </div>
-            <div class="stat-card p-6 md:p-10 rounded-3xl text-center">
-                <div class="text-4xl md:text-6xl font-black text-blue-500 mb-1">FULL</div>
-                <div class="text-[10px] md:text-xs uppercase tracking-[0.3em] text-gray-500">Accompagnement</div>
+            <div class="stat-card p-5 md:p-10 rounded-2xl md:rounded-3xl text-center">
+                <div class="text-3xl md:text-6xl font-black text-blue-500 mb-1">FULL</div>
+                <div class="text-[8px] md:text-xs uppercase tracking-[0.2em] text-gray-500">Accompagnement</div>
             </div>
         </div>
     </section>
 
     <section class="py-24 px-6 bg-black">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-20">
-                <h2 class="text-blue-500 font-bold uppercase tracking-[0.4em] text-xs mb-6">Le Concept Perform</h2>
-                <p class="text-3xl md:text-5xl font-black uppercase italic leading-tight">
-                    NOUS PILOTONS VOS RÉSEAUX. <br> NOUS GÉNÉRONS <span class="text-blue-500">VOTRE VIRALITÉ.</span>
-                </p>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+        <div class="max-w-6xl mx-auto text-center">
+            <h2 class="text-blue-500 font-bold uppercase tracking-[0.4em] text-xs mb-6">Le Concept Perform</h2>
+            <p class="text-3xl md:text-5xl font-black uppercase italic leading-tight mb-20">
+                NOUS PILOTONS VOS RÉSEAUX. <br> NOUS GÉNÉRONS <span class="text-blue-500">VOTRE VIRALITÉ.</span>
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
                 <div>
                     <div class="big-num">01</div>
                     <h3 class="font-black uppercase text-2xl mb-4 italic">Le Briefing</h3>
-                    <p class="text-gray-400 font-serif italic text-lg leading-relaxed">Vous nous présentez votre projet. On s'imprègne de votre univers pour définir la meilleure direction stratégique.</p>
+                    <p class="text-gray-400 font-serif italic text-lg leading-relaxed">Vous nous présentez votre projet. On s'imprègne de votre univers pour définir la meilleure direction.</p>
                 </div>
                 <div>
                     <div class="big-num">02</div>
                     <h3 class="font-black uppercase text-2xl mb-4 italic">L'Ingénierie</h3>
-                    <p class="text-gray-400 font-serif italic text-lg leading-relaxed">Nos équipes analysent les tendances et prennent en charge l'intégralité de la production pour maximiser l'impact.</p>
+                    <p class="text-gray-400 font-serif italic text-lg leading-relaxed">Nos équipes analysent les tendances et créent un système de contenu sur-mesure pour forcer l'attention.</p>
                 </div>
                 <div>
                     <div class="big-num">03</div>
                     <h3 class="font-black uppercase text-2xl mb-4 italic">L'Explosion</h3>
-                    <p class="text-gray-400 font-serif italic text-lg leading-relaxed">Votre marque sature les réseaux. Vous obtenez l'attention massive nécessaire pour transformer vos vues en opportunités.</p>
+                    <p class="text-gray-400 font-serif italic text-lg leading-relaxed">Votre marque sature les réseaux. Vous obtenez la visibilité nécessaire pour transformer vos vues en cash.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <section class="py-24 px-6 bg-[#050505] border-y border-white/5">
-        <div class="max-w-5xl mx-auto flex flex-col lg:flex-row items-center gap-16">
-            <div class="flex-1">
+        <div class="max-w-5xl mx-auto flex flex-col lg:flex-row items-center gap-12">
+            <div class="flex-1 text-center lg:text-left">
                 <h2 class="text-4xl md:text-6xl font-black uppercase italic leading-[0.9] mb-8">
                     300K VUES EN <br> <span class="text-blue-500">QUELQUES SEMAINES.</span>
                 </h2>
-                <p class="text-gray-400 font-serif italic text-lg md:text-xl leading-relaxed">
-                    Cas Shopify : Nous avons généré plus de <span class="text-white">300 000 vues qualifiées</span> TikTok en moins d'un mois pour une boutique e-commerce. 
+                <p class="text-gray-400 font-serif italic text-lg md:text-xl max-w-xl mx-auto lg:mx-0">
+                    Nous avons propulsé une boutique Shopify de l'anonymat total à 300 000 vues TikTok organiques en moins d'un mois.
                 </p>
             </div>
-            <div class="flex-1 w-full">
+            <div class="flex-1 w-full max-w-md mx-auto">
                 <div class="bg-blue-500/10 p-4 rounded-3xl border border-blue-500/20">
                     <img src="https://i.postimg.cc/L5fB5JmF/Capture-d-ecran-2025-03-06-221831.png" class="rounded-2xl w-full" alt="Shopify Proof">
                 </div>
@@ -182,22 +189,23 @@
                     Envoyer un DM
                 </button>
                 <p class="mt-6 text-gray-600 text-[10px] uppercase tracking-[0.3em]">Présentez-moi votre projet en quelques mots sur Instagram.</p>
+                <p class="lg:hidden text-blue-500 text-[9px] uppercase mt-4 tracking-widest animate-pulse">← Swippez pour voir les preuves →</p>
             </div>
 
             <div class="proof-container">
-                <img src="https://i.postimg.cc/j2NQ2DRV/Capture-d-ecran-2025-03-06-221719.png" class="mb-6">
-                <img src="https://i.postimg.cc/tJPtJs9X/Capture-d-ecran-2025-03-06-221946.png" class="mb-6">
-                <img src="https://i.postimg.cc/nVQ10PBq/image.png" class="mb-6">
-                <img src="https://i.postimg.cc/mkMNkPT4/image-2.png" class="mb-6">
-                <img src="https://i.postimg.cc/d3dm3hJK/image-3.png" class="mb-6">
-                <img src="https://i.postimg.cc/6qRLq8BW/image-4.png" class="mb-6">
-                <img src="https://i.postimg.cc/j2NQ2DRq/image-5.png" class="mb-6">
-                <img src="https://i.postimg.cc/MHRbHnzp/image-6.png" class="mb-6">
-                <img src="https://i.postimg.cc/jqJhZFPN/image-7.png" class="mb-6">
-                <img src="https://i.postimg.cc/h470p5Td/image-8.png" class="mb-6">
-                <img src="https://i.postimg.cc/kMtyfpKS/image-9.png" class="mb-6">
-                <img src="https://i.postimg.cc/jqJhZFPh/IMG-0534-PNG.png" class="mb-6">
-                <img src="https://i.postimg.cc/05JCcBD0/IMG-1872.jpg" class="mb-6">
+                <img src="https://i.postimg.cc/j2NQ2DRV/Capture-d-ecran-2025-03-06-221719.png">
+                <img src="https://i.postimg.cc/tJPtJs9X/Capture-d-ecran-2025-03-06-221946.png">
+                <img src="https://i.postimg.cc/nVQ10PBq/image.png">
+                <img src="https://i.postimg.cc/mkMNkPT4/image-2.png">
+                <img src="https://i.postimg.cc/d3dm3hJK/image-3.png">
+                <img src="https://i.postimg.cc/6qRLq8BW/image-4.png">
+                <img src="https://i.postimg.cc/j2NQ2DRq/image-5.png">
+                <img src="https://i.postimg.cc/MHRbHnzp/image-6.png">
+                <img src="https://i.postimg.cc/jqJhZFPN/image-7.png">
+                <img src="https://i.postimg.cc/h470p5Td/image-8.png">
+                <img src="https://i.postimg.cc/kMtyfpKS/image-9.png">
+                <img src="https://i.postimg.cc/jqJhZFPh/IMG-0534-PNG.png">
+                <img src="https://i.postimg.cc/05JCcBD0/IMG-1872.jpg">
             </div>
         </div>
     </main>
@@ -211,13 +219,7 @@
         gsap.ticker.add((time)=>{ lenis.raf(time * 1000); });
         gsap.registerPlugin(ScrollTrigger);
 
-        // Animations Big Numbers
-        gsap.from(".big-num", {
-            scrollTrigger: { trigger: ".big-num", start: "top 90%" },
-            y: 30, opacity: 0, stagger: 0.2, duration: 1, ease: "power2.out"
-        });
-
-        // Grille Proofs (Desktop uniquement)
+        // Desktop Animations
         if (window.innerWidth >= 1024) {
             gsap.from(".proof-container img", {
                 scrollTrigger: { trigger: ".proof-container", start: "top 80%" },
