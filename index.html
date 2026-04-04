@@ -6,36 +6,26 @@
     <title>PERFORM | Explosion Organique & Acquisition</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.3.3/pixi.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/6.5.1/browser/pixi.min.js"></script>
     
     <style>
         body { background-color: #000; color: #fff; font-family: 'Inter', sans-serif; letter-spacing: -0.03em; overflow-x: hidden; }
-        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.05); }
         .text-blue { color: #3b82f6 !important; }
-        .bg-blue { background-color: #3b82f6; }
         
-        /* --- STYLE POUR LA VIDÉO DE FOND --- */
         .hero-video-container {
-            position: relative;
-            width: 100%;
-            min-height: 95vh;
-            display: flex;
-            align-items: center;
-            overflow: hidden;
+            position: relative; width: 100%; min-height: 95vh; display: flex; align-items: center; overflow: hidden;
         }
         .video-bg {
-            position: absolute;
-            top: 50%; left: 50%; min-width: 100%; min-height: 100%;
+            position: absolute; top: 50%; left: 50%; min-width: 100%; min-height: 100%;
             z-index: -2; transform: translate(-50%, -50%); object-fit: cover;
         }
         .video-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,1) 100%);
             z-index: -1;
         }
 
-        /* --- ANIMATION CRIMSON TEXT --- */
+        /* --- ANIMATION TEXTE --- */
         .animated-text { font-family: "Crimson Text", serif; display: flex; flex-wrap: wrap; color: #eee; }
         .animated-text span {
             display: inline-block; white-space: pre; opacity: 0;
@@ -46,36 +36,23 @@
 
         /* --- SECTION FLAMME --- */
         #flame-section {
-            position: relative;
-            height: 400px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: #000;
-            padding: 0 10%;
-            opacity: 0; transform: translateY(50px);
-            transition: all 1s ease-out;
+            position: relative; min-height: 500px; display: flex; align-items: center;
+            justify-content: space-around; background: #000; padding: 50px 10%;
+            opacity: 0; transform: translateY(30px); transition: all 1s ease-out;
         }
         #flame-section.visible { opacity: 1; transform: translateY(0); }
-        #view { width: 400px; height: 400px; cursor: pointer; }
+        #view { width: 450px; height: 450px; max-width: 100%; }
 
         .proof-container img { width: 100%; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 20px; }
-        @media (max-width: 768px) { #flame-section { flex-direction: column; height: auto; padding: 50px 20px; } #view { width: 300px; height: 300px; } }
     </style>
 </head>
-<body class="antialiased">
-
-    <nav class="p-6 md:p-8 flex justify-between items-center max-w-6xl mx-auto relative z-10">
-        <div class="text-xl md:text-2xl font-black italic tracking-tighter uppercase">PERFORM<span class="text-blue">.</span></div>
-        <div class="text-[9px] md:text-[10px] uppercase tracking-[0.3em] text-gray-400 border border-white/10 px-3 md:px-4 py-1 rounded-full text-center">Accompagnement Stratégique 2026</div>
-    </nav>
+<body>
 
     <header class="hero-video-container">
         <video autoplay muted loop playsinline class="video-bg">
             <source src="ma-video.mp4" type="video/mp4">
         </video>
         <div class="video-overlay"></div>
-
         <div class="max-w-5xl mx-auto px-6 relative z-10">
             <h1 class="animated-text text-4xl md:text-7xl font-bold mb-6 uppercase" id="hook-title">
                 PARTIR MAINTENANT SERAIT VOTRE <span class="text-blue">PIRE DÉCISION</span> DE 2026.
@@ -94,7 +71,7 @@
     </header>
 
     <section id="flame-section">
-        <div class="text-left max-w-lg">
+        <div class="text-left max-w-lg z-10">
             <h2 class="text-3xl md:text-5xl font-black italic uppercase leading-tight">
                 FAITES EN SORTE QUE CETTE FLAMME <br>
                 <span class="text-blue">"TON PROJET"</span> <br>
@@ -105,182 +82,116 @@
     </section>
 
     <main class="max-w-5xl mx-auto px-6 pt-16 pb-24">
-        <section class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-20 md:mb-32">
-            <div class="glass p-5 md:p-8 rounded-2xl text-center border-blue/20">
-                <div class="text-2xl md:text-4xl font-black text-blue">204M+</div>
-                <div class="text-[8px] md:text-[9px] uppercase tracking-widest text-gray-600 mt-2">Vues cumulées</div>
-            </div>
-            <div class="glass p-5 md:p-8 rounded-2xl text-center border-white/5"><div class="text-2xl md:text-4xl font-black text-blue">300K</div><div class="text-[8px] md:text-[9px] uppercase mt-2">Shopify TikTok</div></div>
-            <div class="glass p-5 md:p-8 rounded-2xl text-center border-white/5 text-blue"><div class="text-2xl md:text-4xl font-black">170K+</div><div class="text-[8px] md:text-[9px] uppercase mt-2">Abonnés</div></div>
-            <div class="glass p-5 md:p-8 rounded-2xl text-center border-white/5"><div class="text-2xl md:text-4xl font-black">Full</div><div class="text-[8px] md:text-[9px] uppercase mt-2">Gestion</div></div>
-        </section>
-
-        <section class="flex flex-col md:grid md:grid-cols-2 gap-12 mb-32">
-            <div class="space-y-6">
-                <h2 class="text-3xl font-black uppercase italic text-blue">Légitimité terrain.</h2>
-                <div class="text-gray-400 leading-relaxed space-y-4 text-sm md:text-base font-light">
-                    <p>La plupart des agences promettent. <strong>Perform exécute.</strong></p>
-                    <p>Tout ce que Perform propose a été testé et validé sur mes propres réseaux de 170k+ abonnés.</p>
-                </div>
-            </div>
-            <div class="proof-container">
-                <img src="https://i.postimg.cc/j2NQ2DRV/Capture-d-ecran-2025-03-06-221719.png">
-                <img src="https://i.postimg.cc/L5fB5JmF/Capture-d-ecran-2025-03-06-221831.png">
-                <img src="https://i.postimg.cc/tJPtJs9X/Capture-d-ecran-2025-03-06-221946.png">
-                <img src="https://i.postimg.cc/nVQ10PBq/image.png">
-                <img src="https://i.postimg.cc/mkMNkPT4/image-2.png">
-                <img src="https://i.postimg.cc/d3dm3hJK/image-3.png">
-                <img src="https://i.postimg.cc/6qRLq8BW/image-4.png">
-                <img src="https://i.postimg.cc/j2NQ2DRq/image-5.png">
-                <img src="https://i.postimg.cc/MHRbHnzp/image-6.png">
-                <img src="https://i.postimg.cc/jqJhZFPN/image-7.png">
-                <img src="https://i.postimg.cc/h470p5Td/image-8.png">
-                <img src="https://i.postimg.cc/kMtyfpKS/image-9.png">
-                <img src="https://i.postimg.cc/jqJhZFPh/IMG-0534-PNG.png">
-                <img src="https://i.postimg.cc/05JCcBD0/IMG-1872.jpg">
-            </div>
-        </section>
-
-        <section class="text-center py-10">
-            <a href="https://instagram.com/blox.vlr" target="_blank" class="inline-block bg-blue text-white px-10 py-5 rounded-full font-black uppercase text-xl shadow-[0_0_60px_rgba(59,130,246,0.4)] hover:scale-105 transition-all">
-                ENVOYER UN DM À @BLOX.VLR
-            </a>
-        </section>
+         <div class="proof-container">
+            <span class="text-[10px] uppercase tracking-[0.5em] text-blue font-bold mb-6 block text-center">Validation Analytics</span>
+            <img src="https://i.postimg.cc/j2NQ2DRV/Capture-d-ecran-2025-03-06-221719.png">
+            <img src="https://i.postimg.cc/L5fB5JmF/Capture-d-ecran-2025-03-06-221831.png">
+        </div>
     </main>
 
-    <script id="flame-frag" type="x-shader/x-vertex">
-        varying vec2 vTextureCoord;  
+    <script id="flame-frag" type="x-shader/x-fragment">
+        precision highp float;
+        varying vec2 vTextureCoord;
         uniform sampler2D uSampler;
-        uniform sampler2D mapSampler;  
-        uniform vec4 filterArea;  
+        uniform sampler2D mapSampler;
+        uniform vec4 filterArea;
         uniform vec2 dimensions;
         uniform float time;
+
         float rand(vec2 co) { return fract(sin(dot(co.xy ,vec2(12.9898, 78.233))) * 43758.5453); }
-        mat2 rotz(float angle) { mat2 m; m[0][0] = cos(angle); m[0][1] = -sin(angle); m[1][0] = sin(angle); m[1][1] = cos(angle); return m; }  
-        float fbm(vec2 uv) {    
+        mat2 rotz(float angle) { float c = cos(angle); float s = sin(angle); return mat2(c, -s, s, c); }
+        
+        float fbm(vec2 uv) {
             float n = (texture2D(mapSampler, uv).r - 0.5) * 0.5;
-            n += (texture2D(mapSampler, uv * 2.0).r - 0.5) * 0.5 * 0.5;
-            n += (texture2D(mapSampler, uv * 3.0).r - 0.5) * 0.5 * 0.5 * 0.5;    
-            return n + 0.5;    
+            n += (texture2D(mapSampler, uv * 2.0).r - 0.5) * 0.25;
+            return n + 0.5;
         }
+
         void main() {
             vec2 uv = (vTextureCoord * filterArea.xy) / dimensions;
             uv.y = 1.0 - uv.y;
             vec2 _uv = uv;
-            uv -= vec2(0.5);
-            uv.y /= dimensions.x / dimensions.y;      
-            float variationH = fbm(vec2(time * 0.3)) * 1.1;
+            uv -= 0.5;
+            uv.y *= dimensions.y / dimensions.x;
+
+            float variationH = fbm(vec2(time * 0.1)) * 1.1;
             vec2 offset = vec2(0.0, -time * 0.05);
-            float f = fbm(uv * 0.1 + offset); 
-            float l = max(0.1, length(uv)); 
-            uv += rotz(((f - 0.5) / l) * smoothstep(-0.2, 0.4, _uv.y) * 0.45) * uv;    
+            float f = fbm(uv * 0.1 + offset);
+            float l = max(0.1, length(uv));
+            uv += rotz(((f - 0.5) / l) * smoothstep(-0.2, 0.4, _uv.y) * 0.45) * uv;
+
             float flame = 1.3 - length(uv.x) * 5.0;
-            float blueflame = pow(flame * 0.9, 15.0);
-            blueflame *= smoothstep(0.2, -1.0, _uv.y);
-            blueflame /= abs(uv.x * 2.0);
-            blueflame = clamp(blueflame, 0.0, 1.0);
+            float blueflame = pow(max(0.0, flame * 0.9), 15.0) * smoothstep(0.2, -1.0, _uv.y);
+            
             flame *= smoothstep(1.0, variationH * 0.5, _uv.y);
             flame = clamp(flame, 0.0, 1.0);
-            flame = pow(flame, 3.0);
-            flame /= smoothstep(1.1, -0.1, _uv.y);    
-            vec4 col = mix(vec4(1.0, 1.0, 0.0, 0.0), vec4(1.0, 1.0, 0.6, 0.0), flame);
-            col = mix(vec4(1.0, 0.0, 0.0, 0.0), col, smoothstep(0.0, 1.6, flame));
-            gl_FragColor = col;
-            vec4 bluecolor = mix(vec4(0.0, 0.0, 1.0, 0.0), gl_FragColor, 0.95);
-            gl_FragColor = mix(gl_FragColor, bluecolor, blueflame);
-            gl_FragColor *= flame;
+            flame = pow(flame, 3.0) / smoothstep(1.1, -0.1, _uv.y);
+
+            vec4 col = mix(vec4(1.0, 0.8, 0.0, 1.0), vec4(1.0, 1.0, 0.6, 1.0), flame);
+            col = mix(vec4(1.0, 0.2, 0.0, 1.0), col, smoothstep(0.0, 1.6, flame));
+            
+            vec4 bluecolor = mix(vec4(0.0, 0.2, 1.0, 1.0), col, 0.95);
+            col = mix(col, bluecolor, blueflame);
+            
+            gl_FragColor = col * flame;
             gl_FragColor.a = flame;
-            float haloSize = 0.5;
-            float centerL = 1.0 - (length(uv + vec2(0.0, 0.1)) / haloSize);
-            vec4 halo = vec4(0.8, 0.3, 0.3, 0.0) * 1.0 * fbm(vec2(time * 0.035)) * centerL + 0.02;
-            gl_FragColor = mix(halo, gl_FragColor, gl_FragColor.a);
-            gl_FragColor *= mix(rand(uv) + rand(uv * 0.45), 1.0, 0.9);
-            gl_FragColor = clamp(gl_FragColor, 0.0, 1.0);
         }
     </script>
 
     <script>
-        // --- ANIMATION TEXTE AVEC MOTS BLEUS ---
+        // --- 1. ANIMATION TEXTE ---
         function animateText(id) {
             const el = document.getElementById(id);
-            const originalHTML = el.innerHTML;
+            const words = el.innerHTML.split(/(\s+|<[^>]+>)/).filter(x => x.trim().length > 0 || x.includes('<'));
             el.innerHTML = "";
-            const tempDiv = document.createElement("div");
-            tempDiv.innerHTML = originalHTML;
-            
-            const nodes = Array.from(tempDiv.childNodes);
-            let delay = 0;
-
-            nodes.forEach(node => {
-                if (node.nodeType === 3) { // Texte simple
-                    node.textContent.split(" ").forEach(word => {
-                        if(word.trim() === "") return;
-                        const span = document.createElement("span");
-                        span.innerText = word + " ";
-                        span.style.animationDelay = (delay++ * 0.08) + "s";
-                        el.appendChild(span);
-                    });
-                } else if (node.nodeType === 1) { // Balise (ex: span bleu)
-                    const span = document.createElement("span");
-                    span.innerHTML = node.innerHTML;
-                    span.className = node.className;
-                    span.style.display = "inline-block";
-                    span.style.animationDelay = (delay++ * 0.08) + "s";
-                    el.appendChild(span);
-                }
+            words.forEach((word, i) => {
+                const span = document.createElement("span");
+                if (word.startsWith('<')) { span.innerHTML = word; span.className = "text-blue"; }
+                else { span.innerText = word + " "; }
+                span.style.animationDelay = (i * 0.08) + "s";
+                el.appendChild(span);
             });
         }
 
-        // --- SCROLL REVEAL ---
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if(entry.isIntersecting) entry.target.classList.add('visible');
-            });
-        }, { threshold: 0.3 });
-        observer.observe(document.getElementById('flame-section'));
-
-        // --- FLAME LOGIC (PixiJS) ---
-        const flameFrag = document.querySelector("#flame-frag").textContent;
-        const baseUrl = "https://s3-us-west-2.amazonaws.com/s.cdpn.io/106114/";
-
-        class FlameFilter extends PIXI.Filter {
-            constructor(texture, time = 0.0) {    
-                super(null, flameFrag);
-                this.uniforms.dimensions = new Float32Array(2);   
-                this.texture = texture;
-                this.time = time;
-            }
-            get texture() { return this.uniforms.mapSampler; }
-            set texture(texture) { texture.baseTexture.wrapMode = PIXI.WRAP_MODES.REPEAT; this.uniforms.mapSampler = texture; }
-            apply(filterManager, input, output, clear) {      
-                this.uniforms.dimensions[0] = input.sourceFrame.width;
-                this.uniforms.dimensions[1] = input.sourceFrame.height;    
-                this.uniforms.time = this.time;
-                filterManager.applyFilter(this, input, output, clear);
-            }
-        }
-
-        const view = document.querySelector("#view");
+        // --- 2. LOGIQUE PIXIJS FLAMME ---
+        const canvas = document.getElementById('view');
         const app = new PIXI.Application({
-            view: view,
-            width: 400,
-            height: 400,
-            backgroundColor: 0x000000,
+            view: canvas,
+            width: 450,
+            height: 450,
             transparent: true,
             antialias: true
         });
 
-        const loader = new PIXI.Loader();
-        loader.add("noise", baseUrl + "noise-texture-11.png?v=9").load((l, r) => {
-            const flame = new FlameFilter(r.noise.texture);
-            app.stage.filterArea = app.screen;
-            app.stage.filters = [flame];
+        const shaderCode = document.getElementById('flame-frag').textContent;
+
+        // On charge une texture de bruit pour le mouvement
+        PIXI.Loader.shared.add("noise", "https://i.imgur.com/8N7V96s.png").load((loader, resources) => {
+            const noiseTex = resources.noise.texture;
+            noiseTex.baseTexture.wrapMode = PIXI.WRAP_MODES.REPEAT;
+
+            const flameFilter = new PIXI.Filter(null, shaderCode, {
+                mapSampler: noiseTex,
+                time: 0,
+                dimensions: [450, 450]
+            });
+
+            // Appliquer le filtre à un rectangle vide
+            const bg = new PIXI.Graphics().beginFill(0x000000, 0).drawRect(0, 0, 450, 450).endFill();
+            bg.filters = [flameFilter];
+            app.stage.addChild(bg);
+
             app.ticker.add((delta) => {
-                flame.time += 0.1 * delta;
+                flameFilter.uniforms.time += 0.05 * delta;
             });
         });
 
-        // Init animations
+        // --- 3. SCROLL REVEAL ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.2 });
+        observer.observe(document.getElementById('flame-section'));
+
         animateText("hook-title");
         animateText("sub-title");
         animateText("slogan");
