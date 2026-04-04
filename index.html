@@ -11,37 +11,30 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;900&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap');
-
-        :root {
-            --color-blue: #3b82f6;
-            --font-main: "Inter", sans-serif;
-            --font-serif: "Crimson Text", serif;
-            --transition: 0.25s;
-            --spark: 1.8s;
-            --hue: 245;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap');
 
         body {
             background-color: #000;
             color: #fff;
-            font-family: var(--font-main);
+            font-family: 'Inter', sans-serif;
             overflow-x: hidden;
-            --active: 0;
+            transition: background-color .3s;
         }
 
         /* --- EFFET GRAIN --- */
         body::after {
-            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url("https://img.freepik.com/premium-photo/white-dust-scratches-black-background_279525-2.jpg?w=640");
-            opacity: 0.05; mix-blend-mode: screen; pointer-events: none; z-index: 999;
+            content: ''; position: fixed; inset: 0;
+            background-image: url("https://assets.codepen.io/165585/noise_1.png");
+            opacity: 0.05; mix-blend-mode: overlay; pointer-events: none; z-index: 999;
         }
+
+        /* --- HOVER DU BODY (Change la couleur du fond quand on survole le bouton) --- */
+        body:has(.generate-button:hover) { background-color: #0c041d; }
 
         /* --- HERO VIDEO --- */
         .hero-video-full {
             position: relative; width: 100%; height: 100vh;
-            display: flex; align-items: center; justify-content: center;
-            overflow: hidden;
+            display: flex; align-items: center; justify-content: center; overflow: hidden;
         }
         .video-bg {
             position: absolute; top: 50%; left: 50%; min-width: 100%; min-height: 100%;
@@ -53,30 +46,57 @@
             z-index: -1;
         }
 
-        /* --- GALAXY BUTTON CSS --- */
-        .galaxy-button { position: relative; --active: 0; }
-        .galaxy-button button {
-            --cut: 0.1em;
-            background: radial-gradient(120% 120% at 126% 126%, hsl(var(--hue) calc(var(--active) * 97%) 98% / calc(var(--active) * 0.9)) 40%, transparent 50%) calc(100px - (var(--active) * 100px)) 0 / 100% 100% no-repeat, 
-                        radial-gradient(120% 120% at 120% 120%, hsl(var(--hue) calc(var(--active) * 97%) 70% / calc(var(--active) * 1)) 30%, transparent 70%) calc(100px - (var(--active) * 100px)) 0 / 100% 100% no-repeat,
-                        hsl(var(--hue) calc(var(--active) * 100%) calc(12% - (var(--active) * 8%)));
-            font-size: 1.2rem; font-weight: 700; border: 0; cursor: pointer; padding: 1.2em 2em;
-            display: flex; align-items: center; gap: 0.25em; white-space: nowrap; border-radius: 2rem;
-            position: relative; transition: box-shadow var(--transition), scale var(--transition);
-            scale: calc(1 + (var(--active) * 0.1)); transform-style: preserve-3d; overflow: hidden;
-            box-shadow: 0 0 calc(var(--active) * 4em) calc(var(--active) * 1em) hsl(var(--hue) 97% 61% / 0.3);
+        /* --- DESIGN DU NOUVEAU BOUTON --- */
+        .generate-button {
+            --generate-button-star-1-opacity: .25;
+            --generate-button-star-1-scale: 1;
+            --generate-button-star-2-opacity: 1;
+            --generate-button-star-2-scale: 1;
+            --generate-button-star-3-opacity: .5;
+            --generate-button-star-3-scale: 1;
+            --generate-button-dots-opacity: 0;
+            appearance: none; outline: none; border: none;
+            padding: 16px 24px 16px 20px; border-radius: 29px;
+            background-color: #1D1D1D; color: #616161;
+            min-width: 220px; display: flex; align-items: center; justify-content: center;
+            position: relative; cursor: pointer; z-index: 1;
+            transform: scale(var(--generate-button-scale, 1)) translateZ(0);
+            box-shadow: 0px 0px 120px var(--generate-button-shadow-wide, transparent), 0px 4px 12px rgba(0, 0, 0, 0.05), inset 0px 1px 1px var(--generate-button-shadow-inset, rgba(255, 255, 255, 0.04));
+            transition: transform .3s, background-color .3s, box-shadow .3s, color .3s;
         }
-        .galaxy-button:hover { --active: 1; }
-        .star { height: calc(var(--size) * 1px); aspect-ratio: 1; background: white; border-radius: 50%; position: absolute; opacity: var(--alpha); top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(10deg) rotate(0deg) translateY(calc(var(--distance) * 1px)); animation: orbit calc(var(--duration) * 1s) calc(var(--delay) * -1s) infinite linear; }
-        @keyframes orbit { to { transform: translate(-50%, -50%) rotate(10deg) rotate(360deg) translateY(calc(var(--distance) * 1px)); } }
-        .galaxy { position: absolute; width: 100%; aspect-ratio: 1; top: 50%; left: 50%; translate: -50% -50%; overflow: hidden; opacity: var(--active); transition: opacity var(--transition); }
-        .galaxy__ring { height: 200%; width: 200%; position: absolute; top: 50%; left: 50%; border-radius: 50%; transform: translate(-28%, -40%) rotateX(-24deg) rotateY(-30deg) rotateX(90deg); transform-style: preserve-3d; }
-        .spark { position: absolute; inset: 0; border-radius: 2rem; rotate: 0deg; overflow: hidden; mask: linear-gradient(white, transparent 50%); animation: flip calc(var(--spark) * 2) infinite steps(2, end); }
-        @keyframes flip { to { rotate: 360deg; } }
-        .spark:before { content: ""; position: absolute; width: 200%; aspect-ratio: 1; top: 0%; left: 50%; z-index: -1; translate: -50% -15%; transform: rotate(-90deg); opacity: calc((var(--active)) + 0.4); background: conic-gradient(from 0deg, transparent 0 340deg, white 360deg); transition: opacity var(--transition); animation: rotate var(--spark) linear infinite both; }
-        @keyframes rotate { to { transform: rotate(90deg); } }
-        .backdrop { position: absolute; inset: 0.1em; background: inherit; border-radius: 2rem; transition: background var(--transition); z-index: -1; }
-        .text { color: hsl(0 0% calc(60% + (var(--active) * 26%))); z-index: 2; text-transform: uppercase; letter-spacing: 0.2em; font-size: 0.8rem; }
+
+        .generate-button:before {
+            content: ''; display: block; position: absolute; right: 20%; height: 20px; left: 20%; bottom: -10px;
+            background: #D3B3FF; filter: blur(12.5px); z-index: 2; opacity: 0; transition: opacity .4s;
+        }
+
+        .generate-button span {
+            position: relative; z-index: 1; font-weight: 600; font-size: 16px;
+            line-height: 26px; letter-spacing: 0.005em; display: block;
+        }
+
+        .generate-button .stroke { mix-blend-mode: hard-light; }
+        .generate-button .stroke svg {
+            position: absolute; inset: 0; width: 100%; height: 100%; fill: none;
+            stroke-width: .75px; stroke: #E2D9FF; stroke-dasharray: 1.5 14; stroke-dashoffset: 22; opacity: 0;
+        }
+        .generate-button .stroke svg:nth-child(2) { stroke-width: 1px; stroke-opacity: .5; filter: blur(3px); }
+
+        .generate-button svg.icon { width: 24px; height: 26px; margin-right: 12px; fill: currentColor; }
+        .generate-button svg.icon path:nth-child(1) { opacity: var(--generate-button-star-1-opacity); transform: scale(var(--generate-button-star-1-scale)); transform-origin: 25% 14.58%; }
+        .generate-button svg.icon path:nth-child(2) { opacity: var(--generate-button-star-2-opacity); transform: scale(var(--generate-button-star-2-scale)); transform-origin: 60.42% 50%; }
+        .generate-button svg.icon path:nth-child(3) { opacity: var(--generate-button-star-3-opacity); transform: scale(var(--generate-button-star-3-scale)); transform-origin: 25% 85.42%; }
+
+        .generate-button:hover {
+            --generate-button-scale: 1.1;
+            --generate-button-shadow-wide: rgba(208, 173, 255, 0.4);
+            --generate-button-shadow-inset: rgba(255, 255, 255, 0.35);
+            color: #fff; background-color: #6D44F4;
+        }
+        .generate-button:hover .stroke svg { animation: stroke 2s linear infinite; }
+        .generate-button:hover:before { opacity: 1; }
+
+        @keyframes stroke { to { stroke-dashoffset: 6; opacity: 0; } 25%, 75% { opacity: 1; } }
 
         .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
         .proof-container img { width: 100%; border-radius: 12px; margin-bottom: 24px; border: 1px solid #111; }
@@ -105,10 +125,6 @@
             <p class="text-3xl md:text-5xl font-black uppercase italic leading-tight mb-10">
                 NOUS PRENONS VOS RÉSEAUX. <br> NOUS CRÉONS <span class="text-blue-500">VOTRE VIRALITÉ.</span>
             </p>
-            <p class="text-gray-400 font-serif italic text-xl md:text-2xl leading-relaxed mb-16">
-                Plus besoin de passer des heures à chercher quoi poster ou comment monter vos vidéos. <br>
-                <span class="text-white">Perform s'occupe de tout :</span> du script à la publication, pour vous garantir l'attention que votre projet mérite.
-            </p>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
                 <div class="glass p-8 rounded-2xl border-white/5">
                     <div class="text-blue-500 font-black text-2xl mb-2">01.</div>
@@ -123,7 +139,7 @@
                 <div class="glass p-8 rounded-2xl border-white/5">
                     <div class="text-blue-500 font-black text-2xl mb-2">03.</div>
                     <h3 class="font-bold uppercase mb-2">Vous Brillez</h3>
-                    <p class="text-gray-500 text-sm">Votre audience explose, vous n'avez qu'à encaisser les résultats.</p>
+                    <p class="text-gray-500 text-sm">Votre audience explose, vous n'avez qu'à encaisser.</p>
                 </div>
             </div>
         </div>
@@ -131,30 +147,17 @@
 
     <section class="py-32 px-6 bg-[#050505] border-y border-white/5">
         <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-16">
-            <div class="flex-1 order-2 md:order-1">
-                <div class="inline-block bg-blue-500/10 text-blue-500 px-4 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest mb-6">
-                    Cas Concret : E-commerce
-                </div>
+            <div class="flex-1">
                 <h2 class="text-4xl md:text-6xl font-black uppercase italic leading-[0.9] mb-8">
                     300K VUES EN <br> <span class="text-blue-500">QUELQUES SEMAINES.</span>
                 </h2>
                 <p class="text-gray-400 font-serif italic text-lg md:text-xl leading-relaxed mb-8">
-                    Nous avons repris une boutique <span class="text-white">Shopify</span> qui stagnait. En appliquant notre système de scripts et de montage sur TikTok, nous avons généré plus de <span class="text-white">300 000 vues qualifiées</span> en moins d'un mois. 
+                    Cas Shopify : Nous avons généré plus de <span class="text-white">300 000 vues qualifiées</span> TikTok en moins d'un mois pour une boutique e-commerce. 
                 </p>
-                <div class="space-y-4">
-                    <div class="flex items-center gap-4">
-                        <div class="h-2 w-2 rounded-full bg-blue-500"></div>
-                        <p class="text-sm uppercase font-bold tracking-widest">Trafic massif sans publicité payante</p>
-                    </div>
-                    <div class="flex items-center gap-4">
-                        <div class="h-2 w-2 rounded-full bg-blue-500"></div>
-                        <p class="text-sm uppercase font-bold tracking-widest">Explosion des ventes organiques</p>
-                    </div>
-                </div>
             </div>
-            <div class="flex-1 order-1 md:order-2">
-                <div class="glass p-4 rounded-3xl rotate-3 hover:rotate-0 transition-transform duration-500 border-blue-500/20">
-                    <img src="https://i.postimg.cc/L5fB5JmF/Capture-d-ecran-2025-03-06-221831.png" class="rounded-2xl shadow-2xl" alt="Preuve Shopify TikTok">
+            <div class="flex-1">
+                <div class="glass p-4 rounded-3xl border-blue-500/20">
+                    <img src="https://i.postimg.cc/L5fB5JmF/Capture-d-ecran-2025-03-06-221831.png" class="rounded-2xl" alt="Shopify Proof">
                 </div>
             </div>
         </div>
@@ -162,42 +165,28 @@
 
     <main class="max-w-6xl mx-auto px-6 pt-32 pb-32">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-32">
-            <div class="glass p-8 rounded-xl text-center"><div class="text-4xl font-black text-blue-500">204M+</div><p class="text-[10px] uppercase tracking-widest text-gray-500 mt-2">Vues</p></div>
-            <div class="glass p-8 rounded-xl text-center"><div class="text-4xl font-black text-blue-500">170K</div><p class="text-[10px] uppercase text-gray-500 mt-2">Abonnés</p></div>
-            <div class="glass p-8 rounded-xl text-center"><div class="text-4xl font-black text-blue-500">300K+</div><p class="text-[10px] uppercase text-gray-500 mt-2">Impact Vues (14j)</p></div>
-            <div class="glass p-8 rounded-xl text-center"><div class="text-4xl font-black text-blue-500">FULL</div><p class="text-[10px] uppercase text-gray-500 mt-2">Gestion</p></div>
+            <div class="glass p-8 rounded-xl text-center"><div class="text-4xl font-black text-blue-500">204M+</div><p class="text-xs uppercase text-gray-500">Vues</p></div>
+            <div class="glass p-8 rounded-xl text-center"><div class="text-4xl font-black text-blue-500">170K</div><p class="text-xs uppercase text-gray-500">Abonnés</p></div>
+            <div class="glass p-8 rounded-xl text-center"><div class="text-4xl font-black text-blue-500">300K</div><p class="text-xs uppercase text-gray-500">Shopify</p></div>
+            <div class="glass p-8 rounded-xl text-center"><div class="text-4xl font-black text-blue-500">FULL</div><p class="text-xs uppercase text-gray-500">Gestion</p></div>
         </div>
 
         <div class="grid md:grid-cols-2 gap-20 items-start">
             <div class="sticky top-32">
                 <h3 class="text-4xl font-black uppercase italic mb-8 text-blue-500">Légitimité terrain.</h3>
-                <p class="text-gray-400 font-serif italic text-xl mb-12">
-                    Nous ne sommes pas une agence de théorie. Les méthodes Perform ont généré plus de 204 millions de vues sur nos propres réseaux. <br><br>
-                    <span class="text-white">Votre seule mission : exister. La nôtre : vous rendre viral.</span>
-                </p>
+                <p class="text-gray-400 font-serif italic text-xl mb-12">Perform a généré plus de 204 millions de vues. Votre seule mission : exister. La nôtre : vous rendre viral.</p>
                 
-                <div class="galaxy-button" onclick="window.open('https://instagram.com/blox.vlr', '_blank')">
-                    <button>
-                        <span class="spark"></span>
-                        <span class="backdrop"></span>
-                        <span class="galaxy__container">
-                            <span class="star star--static"></span><span class="star star--static"></span>
-                            <span class="star star--static"></span><span class="star star--static"></span>
-                        </span>
-                        <span class="galaxy">
-                            <span class="galaxy__ring">
-                                <script>
-                                    for(let i=0; i<20; i++) document.write('<span class="star"></span>');
-                                </script>
-                            </span>
-                        </span>
-                        <span class="text">Démarrer l'ascension</span>
-                    </button>
-                </div>
+                <button class="generate-button" onclick="window.open('https://instagram.com/blox.vlr', '_blank')">
+                    <svg class="icon" viewBox="0 0 24 26">
+                        <path d="M5.16515 2.62145L5.8075 0.999247C5.83876 0.919722 5.9154 0.866699 6.00112 0.866699C6.08683 0.866699 6.16347 0.919722 6.19473 0.999247L6.83708 2.62145L8.44145 3.27094C8.5201 3.30254 8.57254 3.38003 8.57254 3.4667C8.57254 3.55337 8.5201 3.63085 8.44145 3.66246L6.83708 4.31195L6.19473 5.93415C6.16347 6.0147 6.08683 6.0667 6.00112 6.0667C5.9154 6.0667 5.83876 6.0147 5.8075 5.93415L5.16515 4.31195L3.56078 3.66246C3.48112 3.63085 3.42969 3.55337 3.42969 3.4667C3.42969 3.38003 3.48112 3.30254 3.56078 3.27094L5.16515 2.62145Z" />
+                        <path d="M11.2362 9.43967C11.5502 9.30067 11.8015 9.05025 11.9405 8.73617L13.5494 5.11725C13.7169 4.74204 14.0887 4.5 14.5 4.5C14.9112 4.5 15.2839 4.74204 15.4506 5.11725L17.0603 8.73617C17.1985 9.05025 17.4497 9.3015 17.7638 9.43967L21.3827 11.0494C21.7579 11.2161 22 11.5887 22 12C22 12.4112 21.7579 12.7831 21.3827 12.9506L17.7638 14.5595C17.4497 14.6985 17.1993 14.9497 17.0603 15.2638L15.4506 18.8827C15.2839 19.2579 14.9112 19.5 14.5 19.5C14.0887 19.5 13.7169 19.2579 13.5494 18.8827L11.9405 15.2638C11.8015 14.9497 11.5502 14.6985 11.2362 14.5595L7.61725 12.9506C7.24204 12.7831 7 12.4112 7 12C7 11.5887 7.24204 11.2161 7.61725 11.0494L11.2362 9.43967Z" />
+                        <path d="M4.60728 19.392L5.67703 16.6875C5.72997 16.5541 5.85854 16.4666 6.00056 16.4666C6.14258 16.4666 6.27031 16.5541 6.32325 16.6875L7.39299 19.392L10.0678 20.4736C10.1997 20.5271 10.2863 20.6563 10.2863 20.7999C10.2863 20.9435 10.1997 21.0735 10.0678 21.1271L7.39299 22.2087L6.32325 24.9123C6.27031 25.0457 6.14258 25.1332 6.00056 25.1332C5.85854 25.1332 5.72997 25.0457 5.67703 24.9123L4.60728 22.2087L1.93333 21.1271C1.8014 21.0735 1.71484 20.9435 1.71484 20.7999C1.71484 20.6563 1.8014 20.5271 1.93333 20.4736L4.60728 19.392Z" />
+                    </svg>
+                    <span>Démarrer l'ascension</span>
+                </button>
             </div>
 
             <div class="proof-container">
-                <span class="text-[10px] uppercase tracking-[0.5em] text-blue-500 font-bold mb-8 block text-center">Plus de Preuves</span>
                 <img src="https://i.postimg.cc/j2NQ2DRV/Capture-d-ecran-2025-03-06-221719.png">
                 <img src="https://i.postimg.cc/tJPtJs9X/Capture-d-ecran-2025-03-06-221946.png">
                 <img src="https://i.postimg.cc/nVQ10PBq/image.png">
@@ -215,36 +204,69 @@
         </div>
     </main>
 
-    <footer class="py-10 border-t border-white/5 text-center text-gray-700 text-[10px] uppercase tracking-[0.5em]">
-        Perform © 2026 — L'Art de la Domination Organique.
-    </footer>
-
     <script>
         const lenis = new Lenis();
         gsap.ticker.add((time)=>{ lenis.raf(time * 1000); });
-        gsap.registerPlugin(ScrollTrigger);
 
-        const RANDOM = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
-        const PARTICLES = document.querySelectorAll('.star');
-        PARTICLES.forEach(P => {
-            P.setAttribute('style', `
-                --angle: ${RANDOM(0, 360)};
-                --duration: ${RANDOM(6, 20)};
-                --delay: ${RANDOM(1, 10)};
-                --alpha: ${RANDOM(40, 90) / 100};
-                --size: ${RANDOM(2, 6)};
-                --distance: ${RANDOM(40, 200)};
-            `);
-        });
+        // DOTS ANIMATION LOGIC
+        const DOT_AMOUNT = 40;
+        const createSVG = (width, height, className, childType, childAttributes) => {
+            const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            svg.classList.add(className);
+            const child = document.createElementNS("http://www.w3.org/2000/svg", childType);
+            svg.setAttributeNS(null, "viewBox", `0 0 ${width} ${height}`);
+            for (const attr in childAttributes) child.setAttribute(attr, childAttributes[attr]);
+            svg.appendChild(child);
+            return { svg, child };
+        };
 
-        gsap.from(".proof-container img", {
-            scrollTrigger: { trigger: ".proof-container", start: "top 80%" },
-            y: 50, opacity: 0, stagger: 0.1, duration: 1
-        });
+        document.querySelectorAll(".generate-button").forEach((button) => {
+            const width = button.offsetWidth;
+            const height = button.offsetHeight;
+            const style = getComputedStyle(button);
+            const { svg, child: circle } = createSVG(width, height, "dots", "circle", { cx: "0", cy: "0", r: "0" });
+            const strokeGroup = document.createElement("div");
+            strokeGroup.classList.add("stroke");
+            const { svg: stroke } = createSVG(width, height, "stroke-line", "rect", { x: "0", y: "0", width: "100%", height: "100%", rx: parseInt(style.borderRadius, 10), ry: parseInt(style.borderRadius, 10), pathLength: "10" });
+            
+            button.appendChild(svg);
+            strokeGroup.appendChild(stroke);
+            strokeGroup.appendChild(stroke.cloneNode(true));
+            button.appendChild(strokeGroup);
 
-        gsap.from(".glass", {
-            scrollTrigger: { trigger: ".glass", start: "top 90%" },
-            y: 20, opacity: 0, stagger: 0.1, duration: 0.8
+            const timeline = gsap.timeline({ paused: true });
+            for (var i = 0; i < DOT_AMOUNT; i++) {
+                var p = circle.cloneNode(true);
+                svg.appendChild(p);
+                gsap.set(p, { attr: { cx: gsap.utils.random(width * 0.25, width * 0.75), cy: height * 0.5, r: 0 } });
+                var durationRandom = gsap.utils.random(2, 4);
+                timeline.to(p, {
+                    duration: durationRandom,
+                    attr: { r: gsap.utils.random(0.5, 1.5), cy: -height * gsap.utils.random(1, 2), cx: gsap.utils.random(0, width) },
+                    opacity: 0,
+                    ease: "power1.out"
+                }, i * 0.05);
+            }
+            svg.removeChild(circle);
+
+            const stars = gsap.to(button, {
+                repeat: -1, paused: true, keyframes: [
+                    { "--generate-button-star-2-scale": ".5", "--generate-button-star-2-opacity": ".25", duration: 0.3 },
+                    { "--generate-button-star-1-scale": "1.5", "--generate-button-star-1-opacity": ".5", duration: 0.3 },
+                    { "--generate-button-star-1-scale": "1", "--generate-button-star-2-scale": "1", duration: 0.3 }
+                ]
+            });
+
+            button.addEventListener("mouseenter", () => {
+                gsap.to(button, { "--generate-button-dots-opacity": ".8", duration: 0.25 });
+                timeline.restart().play();
+                stars.play();
+            });
+            button.addEventListener("mouseleave", () => {
+                gsap.to(button, { "--generate-button-dots-opacity": "0", duration: 0.25 });
+                timeline.pause();
+                stars.pause();
+            });
         });
     </script>
 </body>
