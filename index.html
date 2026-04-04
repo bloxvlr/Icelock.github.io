@@ -18,7 +18,6 @@
             color: #fff;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
-            transition: background-color .3s;
         }
 
         /* --- EFFET GRAIN --- */
@@ -28,10 +27,8 @@
             opacity: 0.05; mix-blend-mode: overlay; pointer-events: none; z-index: 999;
         }
 
-        /* --- HOVER DU BODY (Change la couleur du fond quand on survole le bouton) --- */
-        body:has(.generate-button:hover) { background-color: #0c041d; }
+        body:has(.generate-button:hover) { background-color: #0c041d; transition: background 0.5s; }
 
-        /* --- HERO VIDEO --- */
         .hero-video-full {
             position: relative; width: 100%; height: 100vh;
             display: flex; align-items: center; justify-content: center; overflow: hidden;
@@ -46,7 +43,7 @@
             z-index: -1;
         }
 
-        /* --- DESIGN DU NOUVEAU BOUTON --- */
+        /* --- NOUVEAU BOUTON DM PRO --- */
         .generate-button {
             --generate-button-star-1-opacity: .25;
             --generate-button-star-1-scale: 1;
@@ -56,50 +53,29 @@
             --generate-button-star-3-scale: 1;
             --generate-button-dots-opacity: 0;
             appearance: none; outline: none; border: none;
-            padding: 16px 24px 16px 20px; border-radius: 29px;
-            background-color: #1D1D1D; color: #616161;
-            min-width: 220px; display: flex; align-items: center; justify-content: center;
+            padding: 20px 40px; border-radius: 40px;
+            background-color: #111; color: #fff;
+            min-width: 280px; display: flex; align-items: center; justify-content: center;
             position: relative; cursor: pointer; z-index: 1;
             transform: scale(var(--generate-button-scale, 1)) translateZ(0);
-            box-shadow: 0px 0px 120px var(--generate-button-shadow-wide, transparent), 0px 4px 12px rgba(0, 0, 0, 0.05), inset 0px 1px 1px var(--generate-button-shadow-inset, rgba(255, 255, 255, 0.04));
-            transition: transform .3s, background-color .3s, box-shadow .3s, color .3s;
+            box-shadow: 0px 0px 80px var(--generate-button-shadow-wide, transparent), inset 0px 1px 1px rgba(255, 255, 255, 0.1);
+            transition: all .3s ease;
         }
-
-        .generate-button:before {
-            content: ''; display: block; position: absolute; right: 20%; height: 20px; left: 20%; bottom: -10px;
-            background: #D3B3FF; filter: blur(12.5px); z-index: 2; opacity: 0; transition: opacity .4s;
-        }
-
-        .generate-button span {
-            position: relative; z-index: 1; font-weight: 600; font-size: 16px;
-            line-height: 26px; letter-spacing: 0.005em; display: block;
-        }
-
-        .generate-button .stroke { mix-blend-mode: hard-light; }
-        .generate-button .stroke svg {
-            position: absolute; inset: 0; width: 100%; height: 100%; fill: none;
-            stroke-width: .75px; stroke: #E2D9FF; stroke-dasharray: 1.5 14; stroke-dashoffset: 22; opacity: 0;
-        }
-        .generate-button .stroke svg:nth-child(2) { stroke-width: 1px; stroke-opacity: .5; filter: blur(3px); }
-
-        .generate-button svg.icon { width: 24px; height: 26px; margin-right: 12px; fill: currentColor; }
-        .generate-button svg.icon path:nth-child(1) { opacity: var(--generate-button-star-1-opacity); transform: scale(var(--generate-button-star-1-scale)); transform-origin: 25% 14.58%; }
-        .generate-button svg.icon path:nth-child(2) { opacity: var(--generate-button-star-2-opacity); transform: scale(var(--generate-button-star-2-scale)); transform-origin: 60.42% 50%; }
-        .generate-button svg.icon path:nth-child(3) { opacity: var(--generate-button-star-3-opacity); transform: scale(var(--generate-button-star-3-scale)); transform-origin: 25% 85.42%; }
 
         .generate-button:hover {
-            --generate-button-scale: 1.1;
-            --generate-button-shadow-wide: rgba(208, 173, 255, 0.4);
-            --generate-button-shadow-inset: rgba(255, 255, 255, 0.35);
-            color: #fff; background-color: #6D44F4;
+            --generate-button-scale: 1.05;
+            --generate-button-shadow-wide: rgba(59, 130, 246, 0.2);
+            background-color: #3b82f6;
         }
-        .generate-button:hover .stroke svg { animation: stroke 2s linear infinite; }
-        .generate-button:hover:before { opacity: 1; }
 
-        @keyframes stroke { to { stroke-dashoffset: 6; opacity: 0; } 25%, 75% { opacity: 1; } }
+        .generate-button span { font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; font-size: 14px; }
+        .generate-button svg.icon { width: 20px; margin-right: 15px; fill: currentColor; }
 
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .proof-container img { width: 100%; border-radius: 12px; margin-bottom: 24px; border: 1px solid #111; }
+        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.3s; }
+        .glass:hover { border-color: #3b82f6; background: rgba(59, 130, 246, 0.03); }
+
+        .proof-container img { width: 100%; border-radius: 12px; margin-bottom: 24px; border: 1px solid #111; filter: grayscale(20%); transition: 0.5s; }
+        .proof-container img:hover { filter: grayscale(0%); border-color: #3b82f6; transform: scale(1.02); }
     </style>
 </head>
 <body class="antialiased">
@@ -113,33 +89,44 @@
             <h1 class="text-5xl md:text-8xl font-black uppercase leading-[0.9] mb-8 italic">
                 PARTIR MAINTENANT SERAIT <br> <span class="text-blue-500">VOTRE PIRE DÉCISION DE 2026.</span>
             </h1>
-            <p class="font-serif italic text-gray-300 text-xl md:text-2xl max-w-3xl mx-auto leading-relaxed">
-                Le marché vous a poussé jusqu'ici. Ignorer ce signe, c'est laisser le hasard diriger votre futur succès.
+            <p class="font-serif italic text-gray-400 text-xl md:text-2xl max-w-3xl mx-auto leading-relaxed">
+                Le marché vous a poussé jusqu'ici. Ne laissez pas cette opportunité à vos concurrents.
             </p>
         </div>
     </header>
 
     <section class="py-32 px-6 bg-black">
-        <div class="max-w-4xl mx-auto text-center">
-            <h2 class="text-blue-500 font-bold uppercase tracking-[0.4em] text-xs mb-6">C'est quoi Perform ?</h2>
-            <p class="text-3xl md:text-5xl font-black uppercase italic leading-tight mb-10">
-                NOUS PRENONS VOS RÉSEAUX. <br> NOUS CRÉONS <span class="text-blue-500">VOTRE VIRALITÉ.</span>
-            </p>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
-                <div class="glass p-8 rounded-2xl border-white/5">
-                    <div class="text-blue-500 font-black text-2xl mb-2">01.</div>
-                    <h3 class="font-bold uppercase mb-2">On Scripte</h3>
-                    <p class="text-gray-500 text-sm">On écrit vos vidéos pour captiver dès la première seconde.</p>
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-20">
+                <h2 class="text-blue-500 font-bold uppercase tracking-[0.4em] text-xs mb-6">Le Protocole Perform</h2>
+                <p class="text-4xl md:text-6xl font-black uppercase italic leading-tight">
+                    DE L'IDÉE À <span class="text-blue-500">L'EXPLOSION.</span>
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="glass p-10 rounded-3xl relative overflow-hidden group">
+                    <div class="text-blue-500/20 font-black text-8xl absolute -right-4 -top-4 group-hover:text-blue-500/40 transition-all">01</div>
+                    <h3 class="text-2xl font-black uppercase mb-4 italic">Le Briefing</h3>
+                    <p class="text-gray-400 font-serif italic text-lg leading-relaxed">
+                        Vous nous expliquez votre projet, votre vision et vos objectifs. Pas de formulaire complexe, juste une discussion directe pour comprendre l'âme de votre marque.
+                    </p>
                 </div>
-                <div class="glass p-8 rounded-2xl border-white/5">
-                    <div class="text-blue-500 font-black text-2xl mb-2">02.</div>
-                    <h3 class="font-bold uppercase mb-2">On Monte</h3>
-                    <p class="text-gray-500 text-sm">Un montage dynamique pour que personne ne scrolle.</p>
+
+                <div class="glass p-10 rounded-3xl relative overflow-hidden group">
+                    <div class="text-blue-500/20 font-black text-8xl absolute -right-4 -top-4 group-hover:text-blue-500/40 transition-all">02</div>
+                    <h3 class="text-2xl font-black uppercase mb-4 italic">L'Ingénierie</h3>
+                    <p class="text-gray-400 font-serif italic text-lg leading-relaxed">
+                        On analyse les tendances et on scripte chaque seconde. On crée un montage dynamique "haute-rétention" conçu pour forcer l'algorithme à vous mettre en avant.
+                    </p>
                 </div>
-                <div class="glass p-8 rounded-2xl border-white/5">
-                    <div class="text-blue-500 font-black text-2xl mb-2">03.</div>
-                    <h3 class="font-bold uppercase mb-2">Vous Brillez</h3>
-                    <p class="text-gray-500 text-sm">Votre audience explose, vous n'avez qu'à encaisser.</p>
+
+                <div class="glass p-10 rounded-3xl relative overflow-hidden group">
+                    <div class="text-blue-500/20 font-black text-8xl absolute -right-4 -top-4 group-hover:text-blue-500/40 transition-all">03</div>
+                    <h3 class="text-2xl font-black uppercase mb-4 italic">La Domination</h3>
+                    <p class="text-gray-400 font-serif italic text-lg leading-relaxed">
+                        Votre contenu génère des millions de vues et sature l'espace organique. Vous n'avez plus qu'à convertir cette attention en croissance réelle et prévisible.
+                    </p>
                 </div>
             </div>
         </div>
@@ -149,14 +136,14 @@
         <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-16">
             <div class="flex-1">
                 <h2 class="text-4xl md:text-6xl font-black uppercase italic leading-[0.9] mb-8">
-                    300K VUES EN <br> <span class="text-blue-500">QUELQUES SEMAINES.</span>
+                    300K VUES POUR <br> <span class="text-blue-500">UNE BOUTIQUE.</span>
                 </h2>
                 <p class="text-gray-400 font-serif italic text-lg md:text-xl leading-relaxed mb-8">
-                    Cas Shopify : Nous avons généré plus de <span class="text-white">300 000 vues qualifiées</span> TikTok en moins d'un mois pour une boutique e-commerce. 
+                    En quelques semaines, nous avons propulsé une boutique Shopify de l'anonymat à <span class="text-white">300 000 vues TikTok</span> grâce à un seul angle marketing bien exécuté.
                 </p>
             </div>
             <div class="flex-1">
-                <div class="glass p-4 rounded-3xl border-blue-500/20">
+                <div class="glass p-4 rounded-3xl">
                     <img src="https://i.postimg.cc/L5fB5JmF/Capture-d-ecran-2025-03-06-221831.png" class="rounded-2xl" alt="Shopify Proof">
                 </div>
             </div>
@@ -167,26 +154,32 @@
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-32">
             <div class="glass p-8 rounded-xl text-center"><div class="text-4xl font-black text-blue-500">204M+</div><p class="text-xs uppercase text-gray-500">Vues</p></div>
             <div class="glass p-8 rounded-xl text-center"><div class="text-4xl font-black text-blue-500">170K</div><p class="text-xs uppercase text-gray-500">Abonnés</p></div>
-            <div class="glass p-8 rounded-xl text-center"><div class="text-4xl font-black text-blue-500">300K</div><p class="text-xs uppercase text-gray-500">Shopify</p></div>
-            <div class="glass p-8 rounded-xl text-center"><div class="text-4xl font-black text-blue-500">FULL</div><p class="text-xs uppercase text-gray-500">Gestion</p></div>
+            <div class="glass p-8 rounded-xl text-center"><div class="text-4xl font-black text-blue-500">Full</div><p class="text-xs uppercase text-gray-500">Support</p></div>
+            <div class="glass p-8 rounded-xl text-center"><div class="text-4xl font-black text-blue-500">Full</div><p class="text-xs uppercase text-gray-500">Gestion</p></div>
         </div>
 
         <div class="grid md:grid-cols-2 gap-20 items-start">
-            <div class="sticky top-32">
-                <h3 class="text-4xl font-black uppercase italic mb-8 text-blue-500">Légitimité terrain.</h3>
-                <p class="text-gray-400 font-serif italic text-xl mb-12">Perform a généré plus de 204 millions de vues. Votre seule mission : exister. La nôtre : vous rendre viral.</p>
+            <div class="sticky top-32 text-center md:text-left flex flex-col items-center md:items-start">
+                <h3 class="text-4xl font-black uppercase italic mb-8 text-blue-500 leading-none">Légitimité terrain.</h3>
+                <p class="text-gray-400 font-serif italic text-xl mb-12">
+                    Votre seule mission : exister. La nôtre : vous rendre viral. Tout ce que nous appliquons a déjà été prouvé sur nos propres réseaux.
+                </p>
                 
-                <button class="generate-button" onclick="window.open('https://instagram.com/blox.vlr', '_blank')">
-                    <svg class="icon" viewBox="0 0 24 26">
-                        <path d="M5.16515 2.62145L5.8075 0.999247C5.83876 0.919722 5.9154 0.866699 6.00112 0.866699C6.08683 0.866699 6.16347 0.919722 6.19473 0.999247L6.83708 2.62145L8.44145 3.27094C8.5201 3.30254 8.57254 3.38003 8.57254 3.4667C8.57254 3.55337 8.5201 3.63085 8.44145 3.66246L6.83708 4.31195L6.19473 5.93415C6.16347 6.0147 6.08683 6.0667 6.00112 6.0667C5.9154 6.0667 5.83876 6.0147 5.8075 5.93415L5.16515 4.31195L3.56078 3.66246C3.48112 3.63085 3.42969 3.55337 3.42969 3.4667C3.42969 3.38003 3.48112 3.30254 3.56078 3.27094L5.16515 2.62145Z" />
-                        <path d="M11.2362 9.43967C11.5502 9.30067 11.8015 9.05025 11.9405 8.73617L13.5494 5.11725C13.7169 4.74204 14.0887 4.5 14.5 4.5C14.9112 4.5 15.2839 4.74204 15.4506 5.11725L17.0603 8.73617C17.1985 9.05025 17.4497 9.3015 17.7638 9.43967L21.3827 11.0494C21.7579 11.2161 22 11.5887 22 12C22 12.4112 21.7579 12.7831 21.3827 12.9506L17.7638 14.5595C17.4497 14.6985 17.1993 14.9497 17.0603 15.2638L15.4506 18.8827C15.2839 19.2579 14.9112 19.5 14.5 19.5C14.0887 19.5 13.7169 19.2579 13.5494 18.8827L11.9405 15.2638C11.8015 14.9497 11.5502 14.6985 11.2362 14.5595L7.61725 12.9506C7.24204 12.7831 7 12.4112 7 12C7 11.5887 7.24204 11.2161 7.61725 11.0494L11.2362 9.43967Z" />
-                        <path d="M4.60728 19.392L5.67703 16.6875C5.72997 16.5541 5.85854 16.4666 6.00056 16.4666C6.14258 16.4666 6.27031 16.5541 6.32325 16.6875L7.39299 19.392L10.0678 20.4736C10.1997 20.5271 10.2863 20.6563 10.2863 20.7999C10.2863 20.9435 10.1997 21.0735 10.0678 21.1271L7.39299 22.2087L6.32325 24.9123C6.27031 25.0457 6.14258 25.1332 6.00056 25.1332C5.85854 25.1332 5.72997 25.0457 5.67703 24.9123L4.60728 22.2087L1.93333 21.1271C1.8014 21.0735 1.71484 20.9435 1.71484 20.7999C1.71484 20.6563 1.8014 20.5271 1.93333 20.4736L4.60728 19.392Z" />
-                    </svg>
-                    <span>Démarrer l'ascension</span>
-                </button>
+                <div class="flex flex-col items-center">
+                    <button class="generate-button" onclick="window.open('https://instagram.com/blox.vlr', '_blank')">
+                        <svg class="icon" viewBox="0 0 24 26">
+                            <path d="M11.2362 9.43967C11.5502 9.30067 11.8015 9.05025 11.9405 8.73617L13.5494 5.11725C13.7169 4.74204 14.0887 4.5 14.5 4.5C14.9112 4.5 15.2839 4.74204 15.4506 5.11725L17.0603 8.73617C17.1985 9.05025 17.4497 9.3015 17.7638 9.43967L21.3827 11.0494C21.7579 11.2161 22 11.5887 22 12C22 12.4112 21.7579 12.7831 21.3827 12.9506L17.7638 14.5595C17.4497 14.6985 17.1993 14.9497 17.0603 15.2638L15.4506 18.8827C15.2839 19.2579 14.9112 19.5 14.5 19.5C14.0887 19.5 13.7169 19.2579 13.5494 18.8827L11.9405 15.2638C11.8015 14.9497 11.5502 14.6985 11.2362 14.5595L7.61725 12.9506C7.24204 12.7831 7 12.4112 7 12C7 11.5887 7.24204 11.2161 7.61725 11.0494L11.2362 9.43967Z" />
+                        </svg>
+                        <span>Envoyer un DM</span>
+                    </button>
+                    <p class="mt-4 text-gray-600 text-[10px] uppercase tracking-widest max-w-[200px] text-center leading-relaxed">
+                        Contactez-moi sur Instagram pour me présenter votre projet en quelques mots.
+                    </p>
+                </div>
             </div>
 
             <div class="proof-container">
+                <span class="text-[10px] uppercase tracking-[0.5em] text-blue-500 font-bold mb-8 block text-center">Validation Analytics</span>
                 <img src="https://i.postimg.cc/j2NQ2DRV/Capture-d-ecran-2025-03-06-221719.png">
                 <img src="https://i.postimg.cc/tJPtJs9X/Capture-d-ecran-2025-03-06-221946.png">
                 <img src="https://i.postimg.cc/nVQ10PBq/image.png">
@@ -204,68 +197,34 @@
         </div>
     </main>
 
+    <footer class="py-10 border-t border-white/5 text-center text-gray-700 text-[10px] uppercase tracking-[0.5em]">
+        Perform © 2026 — L'Art de la Domination.
+    </footer>
+
     <script>
         const lenis = new Lenis();
         gsap.ticker.add((time)=>{ lenis.raf(time * 1000); });
+        gsap.registerPlugin(ScrollTrigger);
 
-        // DOTS ANIMATION LOGIC
-        const DOT_AMOUNT = 40;
-        const createSVG = (width, height, className, childType, childAttributes) => {
-            const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-            svg.classList.add(className);
-            const child = document.createElementNS("http://www.w3.org/2000/svg", childType);
-            svg.setAttributeNS(null, "viewBox", `0 0 ${width} ${height}`);
-            for (const attr in childAttributes) child.setAttribute(attr, childAttributes[attr]);
-            svg.appendChild(child);
-            return { svg, child };
-        };
+        // Animation des blocs concept
+        gsap.from(".glass", {
+            scrollTrigger: { trigger: ".glass", start: "top 90%" },
+            y: 50, opacity: 0, stagger: 0.15, duration: 1, ease: "power2.out"
+        });
 
+        // Animation des images de preuve
+        gsap.from(".proof-container img", {
+            scrollTrigger: { trigger: ".proof-container", start: "top 80%" },
+            y: 50, opacity: 0, stagger: 0.1, duration: 1, ease: "power2.out"
+        });
+
+        // Gestion particules bouton
         document.querySelectorAll(".generate-button").forEach((button) => {
-            const width = button.offsetWidth;
-            const height = button.offsetHeight;
-            const style = getComputedStyle(button);
-            const { svg, child: circle } = createSVG(width, height, "dots", "circle", { cx: "0", cy: "0", r: "0" });
-            const strokeGroup = document.createElement("div");
-            strokeGroup.classList.add("stroke");
-            const { svg: stroke } = createSVG(width, height, "stroke-line", "rect", { x: "0", y: "0", width: "100%", height: "100%", rx: parseInt(style.borderRadius, 10), ry: parseInt(style.borderRadius, 10), pathLength: "10" });
-            
-            button.appendChild(svg);
-            strokeGroup.appendChild(stroke);
-            strokeGroup.appendChild(stroke.cloneNode(true));
-            button.appendChild(strokeGroup);
-
-            const timeline = gsap.timeline({ paused: true });
-            for (var i = 0; i < DOT_AMOUNT; i++) {
-                var p = circle.cloneNode(true);
-                svg.appendChild(p);
-                gsap.set(p, { attr: { cx: gsap.utils.random(width * 0.25, width * 0.75), cy: height * 0.5, r: 0 } });
-                var durationRandom = gsap.utils.random(2, 4);
-                timeline.to(p, {
-                    duration: durationRandom,
-                    attr: { r: gsap.utils.random(0.5, 1.5), cy: -height * gsap.utils.random(1, 2), cx: gsap.utils.random(0, width) },
-                    opacity: 0,
-                    ease: "power1.out"
-                }, i * 0.05);
-            }
-            svg.removeChild(circle);
-
-            const stars = gsap.to(button, {
-                repeat: -1, paused: true, keyframes: [
-                    { "--generate-button-star-2-scale": ".5", "--generate-button-star-2-opacity": ".25", duration: 0.3 },
-                    { "--generate-button-star-1-scale": "1.5", "--generate-button-star-1-opacity": ".5", duration: 0.3 },
-                    { "--generate-button-star-1-scale": "1", "--generate-button-star-2-scale": "1", duration: 0.3 }
-                ]
-            });
-
             button.addEventListener("mouseenter", () => {
-                gsap.to(button, { "--generate-button-dots-opacity": ".8", duration: 0.25 });
-                timeline.restart().play();
-                stars.play();
+                gsap.to(button, { scale: 1.05, duration: 0.3 });
             });
             button.addEventListener("mouseleave", () => {
-                gsap.to(button, { "--generate-button-dots-opacity": "0", duration: 0.25 });
-                timeline.pause();
-                stars.pause();
+                gsap.to(button, { scale: 1, duration: 0.3 });
             });
         });
     </script>
