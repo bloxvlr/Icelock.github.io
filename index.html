@@ -11,8 +11,42 @@
         .text-blue { color: #3b82f6; }
         .bg-blue { background-color: #3b82f6; }
         .glow-blue { box-shadow: 0 0 50px rgba(59, 130, 246, 0.15); }
-        .gradient-text { background: linear-gradient(180deg, #fff 0%, #666 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
+        /* --- STYLE POUR LA VIDÉO DE FOND --- */
+        .hero-video-container {
+            position: relative;
+            width: 100%;
+            height: 80vh; /* Ajuste la hauteur ici (80% de l'écran) */
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .video-bg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -2;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+        }
+
+        /* L'overlay sombre pour la lisibilité */
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.9) 100%);
+            z-index: -1;
+        }
+        /* ---------------------------------- */
+
         .proof-container img { 
             width: 100%; 
             height: auto; 
@@ -33,23 +67,30 @@
 </head>
 <body class="antialiased">
 
-    <nav class="p-6 md:p-8 flex justify-between items-center max-w-6xl mx-auto">
+    <nav class="p-6 md:p-8 flex justify-between items-center max-w-6xl mx-auto relative z-10">
         <div class="text-xl md:text-2xl font-black italic tracking-tighter uppercase">PERFORM<span class="text-blue">.</span></div>
-        <div class="text-[9px] md:text-[10px] uppercase tracking-[0.3em] text-gray-600 border border-white/10 px-3 md:px-4 py-1 rounded-full text-center">Accompagnement Stratégique 2026</div>
+        <div class="text-[9px] md:text-[10px] uppercase tracking-[0.3em] text-gray-400 border border-white/10 px-3 md:px-4 py-1 rounded-full text-center">Accompagnement Stratégique 2026</div>
     </nav>
 
-    <main class="max-w-5xl mx-auto px-6 pt-6 md:pt-10 pb-24">
-        <section class="mb-16 md:mb-32">
+    <header class="hero-video-container">
+        <video autoplay muted loop playsinline poster="image-apercu.jpg" class="video-bg">
+            <source src="ma-video.mp4" type="video/mp4">
+        </video>
+        <div class="video-overlay"></div>
+
+        <div class="max-w-5xl mx-auto px-6 relative z-10">
             <h1 class="text-4xl md:text-7xl font-black mb-6 md:mb-8 leading-[1.1] md:leading-[0.95] tracking-tighter uppercase">
                 204 MILLIONS DE VUES. <br> 
                 UN SYSTÈME QUE <br> 
                 <span class="text-blue">VOS CONCURRENTS IGNORENT.</span>
             </h1>
-            <p class="text-base md:text-xl text-gray-400 max-w-3xl leading-relaxed font-light italic">
+            <p class="text-base md:text-xl text-gray-300 max-w-3xl leading-relaxed font-light italic">
                 Nous ne "cherchons" pas la viralité. Nous déployons les méthodes concrètes pour transformer votre attention organique en levier de croissance prévisible sur tous les réseaux.
             </p>
-        </section>
+        </div>
+    </header>
 
+    <main class="max-w-5xl mx-auto px-6 pt-16 pb-24">
         <section class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-20 md:mb-32">
             <div class="glass p-5 md:p-8 rounded-2xl text-center glow-blue border-blue/20">
                 <div class="text-2xl md:text-4xl font-black text-blue">204M+</div>
@@ -74,110 +115,22 @@
                 <h2 class="text-3xl font-black uppercase italic tracking-tighter text-blue">Légitimité terrain.</h2>
                 <div class="text-gray-400 leading-relaxed space-y-4 text-sm md:text-base font-light">
                     <p>La plupart des agences ont 300 abonnés et vous promettent des millions de vues. <strong>Perform est l'opposé.</strong></p>
-                    <p>Je gère moi-même une audience de <strong>plus de 170 000 abonnés</strong>. Tout ce que Perform propose a été testé et validé sur mes propres réseaux. Nous maîtrisons les scripts qui accrochent et le montage qui fait vendre.</p>
-                    <p class="glass p-6 rounded-xl border-l-4 border-blue">
-                        <strong>300k vues en 14 jours</strong> pour un e-commerce, <strong>10k abonnés YT en 28 jours</strong>... Nous ne vendons pas de la théorie apprise dans des livres, mais de l'expérience brute.
-                    </p>
-                    <p>En travaillant avec les superstars du web, nous avons appris ce qui se passe réellement derrière les plus gros comptes français.</p>
-                </div>
-                
-                <div class="glass p-6 md:p-8 rounded-[30px] border border-blue/20">
-                    <h3 class="text-lg font-black mb-4 uppercase text-blue italic tracking-widest">Nos Actions Concrètes</h3>
-                    <ul class="space-y-3 text-[10px] md:text-xs font-bold uppercase tracking-widest text-gray-300">
-                        <li>✔ Réécriture complète de vos scripts</li>
-                        <li>✔ Montage dynamique haute rétention</li>
-                        <li>✔ Stratégie de publication (horaires & hashtags)</li>
-                        <li>✔ Optimisation du profil pour convertir</li>
-                    </ul>
+                    <p>Je gère moi-même une audience de <strong>plus de 170 000 abonnés</strong>. Tout ce que Perform propose a été testé et validé sur mes propres réseaux.</p>
                 </div>
             </div>
 
-            <div class="proof-container order-last md:order-none">
+            <div class="proof-container">
                 <span class="text-[10px] uppercase tracking-[0.5em] text-blue font-bold mb-6 block text-center">Validation Analytics</span>
                 <img src="https://i.postimg.cc/j2NQ2DRV/Capture-d-ecran-2025-03-06-221719.png">
                 <img src="https://i.postimg.cc/L5fB5JmF/Capture-d-ecran-2025-03-06-221831.png">
-                <img src="https://i.postimg.cc/tJPtJs9X/Capture-d-ecran-2025-03-06-221946.png">
-                <img src="https://i.postimg.cc/nVQ10PBq/image.png">
-                <img src="https://i.postimg.cc/mkMNkPT4/image-2.png">
-                <img src="https://i.postimg.cc/d3dm3hJK/image-3.png">
-                <img src="https://i.postimg.cc/6qRLq8BW/image-4.png">
-                <img src="https://i.postimg.cc/j2NQ2DRq/image-5.png">
-                <img src="https://i.postimg.cc/MHRbHnzp/image-6.png">
-                <img src="https://i.postimg.cc/jqJhZFPN/image-7.png">
-                <img src="https://i.postimg.cc/h470p5Td/image-8.png">
-                <img src="https://i.postimg.cc/kMtyfpKS/image-9.png">
-                <img src="https://i.postimg.cc/jqJhZFPh/IMG-0534-PNG.png">
-                <img src="https://i.postimg.cc/05JCcBD0/IMG-1872.jpg">
-            </div>
-        </section>
-
-        <section class="mb-24 md:mb-32">
-            <div class="offer-card p-8 md:p-12 rounded-[30px] md:rounded-[40px] text-center shadow-[0_0_50px_rgba(59,130,246,0.1)]">
-                <h2 class="text-2xl md:text-3xl font-black uppercase italic mb-4">L'OFFRE D'ENTRÉE PERFORM.</h2>
-                <p class="text-sm md:text-gray-400 mb-8 max-w-2xl mx-auto italic">
-                    Pour chaque partenaire rejoignant notre accompagnement, nous brisons les barrières. 
-                    Nous concevons votre site web haute conversion pour seulement <span class="text-blue font-bold">179€</span> au lieu de 2 000€.
-                </p>
-                <div class="flex justify-center items-center gap-4 text-xs md:text-sm font-bold uppercase tracking-widest">
-                    <span class="line-through text-gray-600">2 000 €</span>
-                    <span class="text-blue text-xl md:text-2xl">179 €</span>
-                </div>
-            </div>
-        </section>
-
-        <section class="mb-24 md:mb-32">
-            <div class="glass p-8 md:p-12 rounded-[30px] md:rounded-[40px] border border-blue/20">
-                <h2 class="text-3xl md:text-5xl font-black uppercase italic mb-8 tracking-tighter">FINI DE POSTER DANS LE VIDE.</h2>
-                <div class="flex flex-col md:grid md:grid-cols-2 gap-8 md:gap-16">
-                    <div class="space-y-6 text-gray-400 text-sm md:text-lg font-light leading-relaxed text-left">
-                        <p>
-                            La plupart des gens publient et "espèrent" que ça marche. C'est une erreur. <strong>Perform retire le hasard de l'équation.</strong>
-                        </p>
-                        <p>
-                            Concrètement, nous reprenons tout : nous réécrivons vos scripts pour accrocher l'attention dès la première seconde, nous gérons un montage dynamique qui empêche de scroller, et nous choisissons les meilleurs moments pour publier. 
-                        </p>
-                    </div>
-                    <div class="space-y-6 text-gray-400 text-sm md:text-lg font-light leading-relaxed text-left">
-                        <p>
-                            On ne fait pas de "jolies vidéos" pour le plaisir. On crée du contenu qui pousse les gens à s'abonner et à acheter. 
-                        </p>
-                        <p>
-                            E-commerce, créateur ou artiste : on s'occupe de la technique et de la stratégie. Vous validez, on s'occupe de vous faire exploser sur Instagram, TikTok et YouTube.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="mb-24 md:mb-32">
-            <h2 class="text-2xl md:text-3xl font-black uppercase italic mb-10 tracking-tighter text-center">Protocole & Transparence<span class="text-blue">.</span></h2>
-            <div class="max-w-3xl mx-auto space-y-4">
-                <details class="glass p-5 md:p-6 rounded-2xl group cursor-pointer border-white/5 hover:border-blue/30 transition">
-                    <summary class="flex justify-between items-center font-bold uppercase tracking-widest text-[10px] md:text-sm">
-                        Concrètement, comment travaillez-vous ?
-                        <span class="text-blue group-open:rotate-180 transition-transform">↓</span>
-                    </summary>
-                    <p class="mt-4 text-gray-400 text-xs md:text-sm font-light leading-relaxed text-left">Nous auditons vos data, réécrivons vos scripts et gérons l'intégralité du montage et de la publication. C'est un système "Done-for-you" conçu pour le ROI.</p>
-                </details>
-                <details class="glass p-5 md:p-6 rounded-2xl group cursor-pointer border-white/5 hover:border-blue/30 transition">
-                    <summary class="flex justify-between items-center font-bold uppercase tracking-widest text-[10px] md:text-sm">
-                        Quelles garanties de résultats ?
-                        <span class="text-blue group-open:rotate-180 transition-transform">↓</span>
-                    </summary>
-                    <p class="mt-4 text-gray-400 text-xs md:text-sm font-light leading-relaxed text-left">Nos protocoles ont un taux de réussite massif. Si votre contenu respecte nos structures de rétention, l'algorithme n'a d'autre choix que de vous pousser.</p>
-                </details>
             </div>
         </section>
 
         <section class="text-center py-10 md:py-20">
             <h2 class="text-3xl md:text-4xl font-black mb-8 md:mb-10 tracking-tighter uppercase italic text-blue">DÉMARRER VOTRE ACCOMPAGNEMENT.</h2>
-            <p class="text-gray-400 mb-10 max-w-xl mx-auto text-sm md:text-base font-light">
-                Si vous voulez que Perform reprenne vos réseaux en main et commence à scaler vos vues, tout se passe sur Instagram.
-            </p>
             <a href="https://instagram.com/blox.vlr" target="_blank" class="inline-block bg-blue text-white px-10 md:px-16 py-5 md:py-6 rounded-full font-black uppercase tracking-tighter text-base md:text-xl hover:scale-105 transition-all shadow-[0_0_60px_rgba(59,130,246,0.4)]">
                 ENVOYER UN DM À @BLOX.VLR
             </a>
-            <p class="mt-6 md:mt-8 text-[9px] md:text-[10px] text-gray-700 uppercase tracking-[0.3em]">Analyse de votre compte en direct par message privé.</p>
         </section>
     </main>
 
